@@ -1,0 +1,227 @@
+* {
+    box-sizing: border-box
+}
+
+body,html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%
+}
+
+body {
+    font-size: 12px;
+    color: #333;
+    background-color: #fff;
+    position: relative
+}
+a {
+    color: #333;
+    text-decoration: none;
+    outline: 0 none;
+    transition: all .2s
+}
+
+body,button,input,select,textarea {
+    font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif
+}
+
+p,ul,li,form,img,div,html,body,h1,h2,h3,dl,dt,dd,table,input,textarea {
+    margin: 0;
+    padding: 0
+}
+
+input,textarea,button {
+    border: 0 none;
+    outline: 0 none;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    font-size: 12px;
+    transition: all .2s
+}
+
+input,textarea {
+    color: #333
+}
+
+input:focus,textarea:focus {
+    border-color: #42BD56;
+    box-shadow: 0 0 4px 0 rgba(66,189,86,0.33)
+}
+
+button {
+    background: none;
+    cursor: pointer;
+    padding: 0
+}
+
+textarea {
+    resize: none;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ebebeb;
+    border-radius: 2px
+}
+.cf:after {
+    clear: both
+}
+
+.theme-border-color {
+    border-color: #42BD56
+}
+.lj-select,.lj-textfield {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 32px;
+    padding: 8px 10px;
+}
+
+.lj-textfield.no-border {
+    border: 0 none;
+    background-color: #f4f4f4;
+    border-radius: 2px
+}
+.lj-form .group {
+    padding: 10px 0;
+}
+.lj-dialog {
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
+    z-index: 2000;
+    overflow: hidden
+}
+.lj-dialog .btn-close {
+    position: absolute;
+    right: 18px;
+    top: 16px;
+    width: 24px;
+    height: 24px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAAXNSR0IArs4c6QAAALBJREFUGBlj3LRp07x///5dDggI6GdAAxs3bswHChkysbCw1DEyMmZt2LChEFkNVEEeBwdHLSNIYtu2bTK/f//e/////2kgE5EUOLi7uz8GK0JTeAVosh7QBLACkBwTiAABLy+vJ0DJZUBmABAvA5kAEgcBuCKQFUDrYoButAaKRyC7EawI2Q0+Pj7HWFlZHZE9wwjUkQcUyEd2A8gKZM8wARUYoysAKQK5EWQikGkIAMolVw3SOZl+AAAAAElFTkSuQmCC") no-repeat center center;
+    cursor: pointer
+}
+.lj-dialog .lj-form {
+    padding: 18px 18px 24px 18px
+}
+
+
+
+ .lj-form .lj-textfield {
+    width: 280px
+}
+
+ .lj-form .lj-textfield.valcode {
+    width: 184px;
+    float: left;
+    margin-right: 16px
+}
+
+ .lj-form .lj-btn {
+    width: 100%;
+    height: 40px;
+    font-size: 16px
+}
+.lj-dialog.operation {
+    top: 50%;
+    left: 80%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+}
+
+.lj-dialog.operation .btn-group {
+    margin-top: 10px;
+    padding: 0;
+    border: 0 none
+}
+
+.lj-dialog.operation .btn-group .lj-btn {
+    float: left;
+    margin: 0 12px 0 0
+}
+
+.lj-dialog.operation .btn-group .pull-right .lj-btn {
+    margin: 0 0 0 12px
+}
+
+.lj-dialog .operation-hd {
+    padding-bottom: 18px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e8e8e8
+}
+
+.lj-checkbox label {
+    position: relative;
+    padding: 0 0 0 24px
+}
+
+.lj-checkbox .fake-ckb {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 0;
+    top: 2px;
+    border: 1px solid #979797;
+    border-radius: 2px
+}
+
+ .lj-dialog {
+    width: 316px;
+    padding: 0
+}
+
+ .lj-dialog .lj-form {
+    padding: 18px 18px 24px 18px
+}
+
+.lj-form .lj-textfield {
+    width: 280px
+}
+
+ .lj-form .lj-textfield.valcode {
+    width: 184px;
+    float: left;
+    margin-right: 16px
+}
+
+.water {
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    height: 30px;
+    width: 100%;
+    z-index: 100;
+}
+.water-c {
+    position: relative;
+}
+.water-1 {
+    background: url('../images/water-1.svg') repeat-x;
+    background-size: 600px;
+    -webkit-animation: wave-animation-1 3.5s infinite linear;
+    animation: wave-animation-1 3.5s infinite linear;
+}
+.water-2 {
+    top: 5px;
+    background: url('../images/water-2.svg') repeat-x;
+    background-size: 600px;
+    -webkit-animation: wave-animation-2 6s infinite linear;
+    animation: wave-animation-2 6s infinite linear;
+}
+.water-1, .water-2 {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+}
+@keyframes wave-animation-1{0%{background-position:0 top}100%{background-position:600px top}}
+@keyframes wave-animation-2{0%{background-position:0 top}100%{background-position:600px top}}

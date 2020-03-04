@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 商城{% endblock %}
+{%block body%}
+<!--header end here-->
+<!--about start here-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/categories.css' %}">
+    <style>
+    .daohangs{
+        width: 13.5%;float: left;text-align: center;border-style: solid;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 5px;
+        font-size: 20px;
+    }
+    </style>
+<div class="products" style="">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+
+                <div style="background-color: #0d0d0d;height: 1px;width: 100%"></div>
+                <div class="daohangs">分类</div>
+                <a href="{% url 'shop' 'all'%}"><div class="daohangs">全部</div></a>
+                <a href="{% url 'shop' '宠物食品'%}"><div class="daohangs">宠物食品</div></a>
+                <a href="{% url 'shop' '清洁用品'%}"><div class="daohangs">清洁用品</div></a>
+                <a href="{% url 'shop' '宠物玩具'%}"><div class="daohangs">宠物玩具</div></a>
+                <a href="{% url 'shop' '宠物衣物'%}"><div class="daohangs">宠物衣物</div></a>
+                <a href="{% url 'shop' '药品'%}"><div class="daohangs">药品</div></a>
+                {% if ison == True %}
+                <a href="{% url 'shopcar' %}"><img src="{% static 'images/shopcar.png' %}" style="height: 27px"></a>
+{% endif %}
+            {% if ison == False %}
+            <img src="{% static 'images/shopcar.png' %}" style="height: 27px"  onclick="alert('请登录')">
+            {% endif %}
+<div style="background-color: #0d0d0d;height: 1px;width: 100%;"></div>
+<form action="{% url 'shop' 'serch'%}" method="post" style="float: right;margin-top:13px;">{% csrf_token %}<input type="text" name="serch" value="{{ serc }}"><input type="submit" value="检索"></form>
+			</div>
+
+		</div>
+
+		<div class="row products_container">
+			<div class="col">
+
+				<!-- Products -->
+
+				<div class="product_grid" style="position: relative; ">
+
+{% for good in goodlist %}
+					<div class="product" style="position: relative;width: 33.33%;float: left;height: 450px">
+						<div class="product_image"><img src="/static/images/goods/good{{ good.goodsid }}.png" alt=""></div>
+
+						<div class="product_content clearfix">
+							<div class="product_info">
+								<div class="product_name"><a href="{% url 'singlegood' good.goodsid%}">{{ good.goodname }}</a></div>
+								<div class="product_price" style="
+    position: relative;
+    left: 0;
+    bottom: -12px;
+">￥{{ good.goodprice }}</div>
+							</div>
+							<div class="product_options">
+
+								<div class="product_fav product_option" style="
+    position: absolute;
+    right: 10px;
+    bottom: -80px;
+"><a href="javascript:void(0);" id="like{{ good.goodsid }}">+</a></div>
+                                 <script>
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+        $("#like{{ good.goodsid }}").click(function(){
+            obj = {
+                gid : {{ good.goodsid }},
+                ison:'{{ ison }}'
+            }
+            $.post("{% url 'addgood' %}",obj,function(i){
+               if(obj.ison == 'True'){
+                if(i.success){
+                    alert('添加至购物车成功')
+                }else{
+                    alert('失败')
+                }}
+               else {alert(('请先登录'))}
+            })
+        })
+    </script>
+							</div>
+						</div>
+					</div>
+{% endfor %}
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row page_num_container">
+			<div id="pagination">
+    <ul class="pager">
+    {% if page_list.has_previous %}
+    <li><a href="?page={{ page_list.previous_page_number }}">&laquo;上一页</a></li>
+    {% else %}
+    <li>&laquo;上一页</li>
+    {% endif %}
+     <li>{{ page_list.number }}/{{ page_list.paginator.num_pages }}</li>
+    {% if page_list.has_next %}
+      <li><a href="?page={{ page_list.next_page_number }}">下一页 &raquo;</a></li>
+    {% else %}
+      <li>下一页 &raquo;</li>
+    {% endif %}
+   </ul>
+</div>
+		</div>
+
+	</div>
+</div>
+	<!-- Sidebar Right -->
+
+
+<!--about end here-->
+<!--footer start here-->
+{%endblock body  %}

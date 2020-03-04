@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 首页 {% endblock %}
+{%block body%}
+ <div class="banner">
+ 	<div class="container">
+		 <div class="banner-bottom">
+            <div class="slider">
+               <section class="slider">
+                  <div class="flexslider">
+                    <ul class="slides" style="font-family: cute">
+                      <li>
+	                      <div class="col-md-4 banner-left">
+		    	             <h3 >在这 <span class="bann-sli-text">&nbsp; 找寻 </span> <span class="bann-sli-text">  &nbsp;&nbsp;你的那个它</span></h3>
+	                      </div>
+	                       <div class="col-md-8 banner-right">
+	                          <img  class="img-responsive" src="{% static 'images/h1.png' %}" alt="">
+	                      	</div>
+	                       <div class="clearfix"> </div>
+  	    		     </li>
+ 	    		     <li>
+	                      <div class="col-md-4 banner-left">
+		    	            <h3>在这 <span class="bann-sli-text"> &nbsp;提供 </span> <span class="bann-sli-text">&nbsp;&nbsp;最好的服务</span></h3>
+	                      </div>
+	                       <div class="col-md-8 banner-right">
+	                          <img  class="img-responsive" src="{% static 'images/h2.png' %}" alt="">
+	                      	</div>
+	                       <div class="clearfix"> </div>
+  	    		     </li>
+  	    		      <li>
+	                      <div class="col-md-4 banner-left">
+		    	            <h3>在这 <span class="bann-sli-text">  &nbsp;记录 </span> <span class="bann-sli-text">&nbsp;&nbsp;与它的点滴</span></h3>
+	                      </div>
+	                       <div class="col-md-8 banner-right">
+	                          <img  class="img-responsive" src="{% static 'images/h3.png' %}" alt="">
+	                      	</div>
+	                       <div class="clearfix"> </div>
+  	    		     </li>
+                 </ul>
+           </div>
+      </section>
+
+			  <!--FlexSlider-->
+			  <script defer src="{% static 'js/jquery.flexslider.js' %}"></script>
+			  <script type="text/javascript">
+			    $(function(){
+			     
+			    });
+			    $(window).load(function(){
+			      $('.flexslider').flexslider({
+			        animation: "slide",
+			        start: function(slider){
+			          $('body').removeClass('loading');
+			        }
+			      });
+			    });
+			  </script>
+			</div>
+		 </div>
+		 <span class="mover"> </span>
+  </div>
+</div>
+<!--header end here-->
+<!--banner-strip start here-->
+<div class="bann-strip">
+	<div class="container">
+    <h4 style="font-size: 40px;font-family: 幼圆;background-color: #e5cd6870;margin-bottom: 10px;padding-top: 10px">热 门 宠 物</h4>
+		<div class="bann-strip-main">
+            {% for pet in petlist %}
+			  <div class="col-md-3 bann-grid" style="  box-shadow:0 15px 15px -15px #000,
+             0 -7px 15px -15px #000;border-radius:10px;padding-bottom: 5px">
+			  	 <a href="single.html"><img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt="{% url 'singlepet' pet.petid %}" class="img-responsive" style="height: 255px;width: 255px "></a>
+			  	 <div class="details" style="border-radius: 5px">
+			  	 	<a href="{% url 'singlepet' pet.petid %}" style="font-size: 2.2em;
+    margin: 0.35em 0em;
+    font-family:cute;color:#886741;">{{ pet.petname }}</a>
+
+
+			  	 </div>
+			  </div>
+			  {% endfor %}
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+<!--banner strip end here-->
+
+<!--services start here-->
+<div class="services">
+	<div class="container">
+		<div class="services-main">
+			  <h2 style="font-family: 造字工房米萌体（非商用）">我们的服务</h2>
+			<div class="col-md-3 ser-grid" style="width: 33.3%">
+				<img src="{% static 'images/serv01.png' %}" style="height: 75px">
+				<p>选择你的宠物带回家</p>
+				<a href="{% url 'pets' 'all' %}"> <span class="glyphicon glyphicon-play" aria-hidden="true"> </span></a>
+			</div>
+			<div class="col-md-3 ser-grid" style="width: 33.3%">
+				<img src="{% static 'images/serv02.png' %}" style="height: 75px">
+				<p>购买宠物的日常用品</p>
+				<a href="{% url 'shop' 'all' %}"> <span class="glyphicon glyphicon-play" aria-hidden="true"> </span></a>
+			</div>
+			<div class="col-md-3 ser-grid" style="width: 33.3%">
+				<img src="{% static 'images/serv03.png' %}" style="height: 75px">
+				<p>与其他用户交流分享</p>
+				<a href="{% url 'demp' %}"> <span class="glyphicon glyphicon-play" aria-hidden="true"> </span></a>
+			</div>
+
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+<!--services end here-->
+<!--news start here-->
+<div class="news">
+	<div class="container">
+		<div class="news-main">
+
+            <h4> News & Events</h4>
+        <h4></h4>
+
+
+                    {% for item in info %}
+			 	 <div class="col-md-4 news-grid" style="font-family:cute">
+			 	 	 <img src="{{item.imgsrc}}"id="newsimg">
+			 	 	 <h5 style="font-family:cute">{{item.title}}</h5><a href="{{item.textsrc}}">Read More</a>
+			 	 	 
+			 	 </div>
+                    {%endfor%}
+			  <div class="clearfix"> </div>
+
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+</div>
+<!--news end here-->
+<!--can help srart here-->
+
+{%endblock body  %}

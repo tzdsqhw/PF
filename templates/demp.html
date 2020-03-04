@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 商城{% endblock %}
+{%block body%}
+<!--header end here-->
+<!--about start here-->
+
+    <style>
+.sendbox{
+    height:280px;
+    width: 70%;
+    border-style:solid ;
+    float: left;
+    padding: 10px;
+}
+    .userbox{
+        padding: 20px;
+        height: 280px;
+        width: 30%;
+          border-style:solid ;
+        float: left;
+
+
+    }
+    .demobox{
+        width: 100%;
+        height: 200px;
+         border-style:solid ;
+        padding: 20px;
+    }
+    .sdt{
+        width: 100%;
+        height: 80%;
+        margin-bottom: 15px;
+    }
+    .sdb{
+        float: right;
+        height: 30px;
+        width: 60px;
+    }
+
+
+
+    </style>
+<div class="products" style="background: url({% static 'images/backg.png' %});background-size: 100% 100%">
+	<div class="container" style="background-color: #fff">
+		<div class="row">
+			<div class="col-12">
+                <form method="post" action="{% url 'demp' %}" >
+                    {% csrf_token %}
+<div class="sendbox">
+{% if ison %}
+        <input type="text" class="sdt" name="dst" style="">
+
+    <input type="submit" class="sdb" value="send">
+    {% endif %}
+{% if ison == False %}
+    <div style="text-align: center">此功能在登录后可正常使用</div>
+{% endif %}
+</div>
+                </form><div class="userbox">
+                {% if ison == True %}
+<img style="background-color: #dff0d8;border-style:solid;width: 120px;height: 120px;margin-left: 40px;border-radius: 50%;margin-bottom: 30px" src="/static/images/userhead/{{ user.head }}">
+                <div style="padding-left: 30px">
+                <a>{{ username }}</a></div>
+                <div style="width: 100%;height: 31px;padding-left:30px">
+                <p style="float: left;font-size: 15px">关注：</p><a style="font-size: 15px">num</a></div>
+                <div style="width: 100%;height: 31px;padding-left: 30px">
+                <p style="float: left;font-size: 15px">粉丝：</p><a style="font-size: 15px">num</a></div>
+                {% endif %}
+            {% if ison == False %}
+                <p style="width: 80%;margin: 10%;text-align: center">未登录</p>
+                <a href="{% url 'login' %}"><button style="width: 80%;margin: 5%">登录</button></a><a href="{% url 'register' %}"><button style="width: 80%;margin: 5%">注册</button></a>
+            {% endif %}
+            </div>
+
+
+			</div>
+
+		</div>
+
+		<div class="row products_container">
+			<div class="col">
+                {% for dem in page_list.object_list %}
+
+
+
+
+				<!-- Products -->
+<div class="demobox" id="d{{ dem.dmentid }}" ><div style="width: 100%;height: 80%;margin-bottom: 20px"><p> {{ dem.dmenttext }}</p></div><div><a style="margin-left:20px" href="{% if dem.username == username %}{% url 'person' 'dem' %}{% endif %}{% if not dem.username == username %}{% url 'singleuser' dem.username %}{% endif %}">{{ dem.username }}</a><p style="float: left;">{{ dem.create_time }}</p>
+
+    <a href="javascript:void(0);" class="icon like" id="like{{ dem.dmentid }}">
+        {% if  dem.likeed == False %}
+        <img src="{% static 'images/like0.png'%}" id="likei{{ dem.dmentid }}" style=" float: right;height: 25px;
+        width: 25px;
+        background: no-repeat;
+        background-size: 25px 25px;">
+        {% endif %}
+    {% if  dem.likeed == True %}
+        <img src="{% static 'images/like1.png'%}" id="likei{{ dem.dmentid }}" style=" float: right;height: 25px;
+        width: 25px;
+        background: no-repeat;
+        background-size: 25px 25px;">
+        {% endif %}
+        <p id="likenum{{ dem.dmentid }}" style="float: right">{{ dem.likenum }}</p></a>{% if dem.username == username %}
+    <a href="javascript:void(0);" style="float: right;margin-right: 20px" id="dele{{ dem.dmentid }}">删除</a>
+{% endif %}
+<script>
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+        $("#dele{{ dem.dmentid }}").click(function(){
+            obj = {
+                did : {{ dem.dmentid }}
+            }
+            $.post("{% url 'deld' %}",obj,function(i){
+
+                if(i.success){
+                    document.getElementById('d{{ dem.dmentid }}').style.display="none";
+                    alert('删除成功');
+
+
+                }else{
+
+                    alert('操作失败')
+                }
+            })
+        })
+    </script></div></div>
+                    <script>
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+        $("#like{{ dem.dmentid }}").click(function(){
+            obj = {
+                did : {{ dem.dmentid }}
+            }
+            $.post("{% url 'like' %}",obj,function(i){
+
+                if(i.success){
+                    if(i.type=="1"){
+                        document.getElementById('likenum{{ dem.dmentid }}').innerHTML=i.likenum;
+                        document.getElementById('likei{{ dem.dmentid }}').src="{% static 'images/like1.png'%}";
+
+                        alert('点赞成功');}else {document.getElementById('likenum{{ dem.dmentid }}').innerHTML=i.likenum;
+                        document.getElementById('likei{{ dem.dmentid }}').src="{% static 'images/like0.png'%}";
+                        alert('取消点赞成功')}
+
+
+                }else{
+
+                    alert('操作失败')
+                }
+            })
+        })
+    </script>
+
+{% endfor %}
+			</div>
+
+		</div>
+
+	<div class="row page_num_container">
+			<div id="pagination">
+    <ul class="pager">
+    {% if page_list.has_previous %}
+    <li><a href="?page={{ page_list.previous_page_number }}">&laquo;上一页</a></li>
+    {% else %}
+    <li>&laquo;上一页</li>
+    {% endif %}
+     <li>{{ page_list.number }}/{{ page_list.paginator.num_pages }}</li>
+    {% if page_list.has_next %}
+      <li><a href="?page={{ page_list.next_page_number }}">下一页 &raquo;</a></li>
+    {% else %}
+      <li>下一页 &raquo;</li>
+    {% endif %}
+   </ul>
+</div>
+		</div>
+
+	</div>
+</div>
+	<!-- Sidebar Right -->
+
+
+<!--about end here-->
+<!--footer start here-->
+{%endblock body  %}

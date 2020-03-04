@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 商城{% endblock %}
+{%block body%}
+ <!--时间css end-->
+     	<script type="text/javascript" src="{%static 'js/jquery-2.1.1.min.js'  %}"></script>
+     <!--时间js start-->
+		<script src="{% static 'js/moment-with-locales.js' %}"></script>
+		<script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+    <form style="margin-top: 10%;margin-bottom: 10%;margin-right: 25%;margin-left: 25%;" method="post" name="formcar" action="{% url 'infor' %}" enctype="multipart/form-data">
+    {% csrf_token %}<img style="background: #808080;width: 200px;height: 200px;margin-left: 20%;margin-right: 20%;margin-bottom: 3%" src="/static/images/userhead/{{ user.head }}">
+    <div style="width: 100%"><label style="width: 15%;text-align: center">头&nbsp;&nbsp;&nbsp;&nbsp;像：</label>
+    <input type="file" name="head" ><p style="color: red;">如无需修改不用填写</p></div>
+        <div style="width: 100%">
+<label style="width: 15%;text-align: center">用户名：</label> <input style="width: 25%" type="text" value="{{ user.username }}" name="username"></div><div style="width: 100%">
+        <label style="width: 15%;text-align: center">原密码：</label> <input style="width: 25%" type="password" name="pwb"><p style="color: red;float: right">如无需修改不用填写</p></div><div style="width: 100%">
+ <label style="width: 15%;text-align: center">新密码：</label> <input style="width: 25%" type="password" name="pwn"><p style="color: red;float: right">如无需修改不用填写</p></div><div style="width: 100%">
+
+
+
+                        <label  for="id_sex" style="width: 15%;text-align: center">性&nbsp;&nbsp;&nbsp;&nbsp;别：</label>
+
+                            <select name="sex" id="id_sex"  style="width: 25%">
+  <option value="男" {% if user.sex == '男' %}selected=""{% endif %}>男</option>
+
+  <option value="女" {% if user.sex == '女' %}selected=""{% endif %}>女</option>
+
+                            </select></div>
+
+
+
+        <div class="col-sm-6" style="width: 100%;padding-left: 0;padding-right: 0">
+            <div class="form-group">
+
+                    <label  style="width: 15%;text-align: center">生&nbsp;&nbsp;&nbsp;&nbsp;日：</label>  <input style="width: 25%" type="text"  id="datetimepicker3" placeholder="{{ user.birth }}" name="birth" value="{{ user.birth }}"><p style="color: red;float: right">如无需修改不用填写</p>
+
+
+
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker3').datetimepicker({
+                 locale: 'zh-cn',
+                 viewMode: 'days',
+			     format: 'YYYY-MM-DD'
+                });
+            });
+        </script>
+
+
+        <input type="submit"><p style="color: red;float: right">{{ emsg }}</p>
+    </form>
+{% endblock %}

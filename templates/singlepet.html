@@ -1,0 +1,12 @@
+  {% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} {{ pet.petname }} {% endblock %}
+{%block body%}
+
+<div style="height:100%;width:100%;padding: 10%;background:url({% static 'images/backg.png' %});background-size: 100% 100%">
+<img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt="" STYLE="height: 600px;width: 45%;float: left"><div style="margin-left: 4%;float: left;width: 51%;height:600px"><p style="margin:2%;font-size: 40px">{{ pet.petname }}</p><p style="margin: 2%;font-size: 20px">价格：{{ good.goodprice }}</p><p style="margin: 2%;font-size: 20px">生日：{{ pet.petbirth }}</p><p style="margin: 2%;font-size: 20px">创建：{{ pet.create_time }}</p><div style="width: 100%;padding-left: 20%"><img src="{% static 'images/visited.png' %}" style="height: 10px;width:17px;float: left"><p style="font-size: 7px;float: left;margin-bottom: 2px">{{ pet.vnum }}</p></div></div><div>
+<p>&nbsp;</p>
+</div>
+
+</div>
+{% endblock %}

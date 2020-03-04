@@ -1,0 +1,348 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>上架物品</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet">
+    <link rel='icon' href="{% static 'img/favicon.ico' %}">
+	<script type="text/javascript" src="{%static 'js/jquery-2.1.1.min.js'  %}"></script>
+     <!--时间js start-->
+		<script src="{% static 'js/moment-with-locales.js' %}"></script>
+		<script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+    <style>
+        body{
+            background-image:url({% static 'images/backg.png' %});
+
+            background-size:100% 100%;background-repeat: no-repeat;
+        }
+        .container{
+            min-width: 250px;
+            margin-top:10%;
+        }
+        .form-bg{
+            background: #00b4ef;
+        }
+        .form-horizontal{
+            background: #fff;
+            padding-bottom: 40px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .form-horizontal .heading{
+            display: block;
+            font-size: 35px;
+            font-weight: 700;
+            padding: 35px 0;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+        .form-horizontal .form-group{
+            padding: 0 40px;
+            margin: 0 0 25px 0;
+            position: relative;
+        }
+        .form-horizontal .form-control{
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            box-shadow: none;
+            padding: 0 20px 0 45px;
+            height: 40px;
+            transition: all 0.3s ease 0s;
+        }
+        .form-horizontal .form-control:focus{
+            background: #e0e0e0;
+            box-shadow: none;
+            outline: 0 none;
+        }
+        .form-horizontal .form-group i{
+            position: absolute;
+            top: 12px;
+            left: 60px;
+            font-size: 17px;
+            color: #c8c8c8;
+            transition : all 0.5s ease 0s;
+        }
+        .form-horizontal .form-control:focus + i{
+            color: #00b4ef;
+        }
+        .form-horizontal .fa-question-circle{
+            display: inline-block;
+            position: absolute;
+            top: 12px;
+            right: 60px;
+            font-size: 20px;
+            color: #808080;
+            transition: all 0.5s ease 0s;
+        }
+        .form-horizontal .fa-question-circle:hover{
+            color: #000;
+        }
+        .form-horizontal .main-checkbox{
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #11a3fc;
+            border-radius: 50%;
+            position: relative;
+            margin: 5px 0 0 5px;
+            border: 1px solid #11a3fc;
+        }
+        .form-horizontal .main-checkbox label{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+        .form-horizontal .main-checkbox label:after{
+            content: "";
+            width: 10px;
+            height: 5px;
+            position: absolute;
+            top: 5px;
+            left: 4px;
+            border: 3px solid #fff;
+            border-top: none;
+            border-right: none;
+            background: transparent;
+            opacity: 0;
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+        .form-horizontal .main-checkbox input[type=checkbox]{
+            visibility: hidden;
+        }
+        .form-horizontal .main-checkbox input[type=checkbox]:checked + label:after{
+            opacity: 1;
+        }
+        .form-horizontal .text{
+            float: left;
+            margin-left: 7px;
+            line-height: 20px;
+            padding-top: 5px;
+            text-transform: capitalize;
+        }
+        .form-horizontal .btn{
+            float: right;
+            font-size: 14px;
+            color: #fff;
+            background: #00b4ef;
+            border-radius: 30px;
+            padding: 10px 25px;
+            border: none;
+            text-transform: capitalize;
+            transition: all 0.5s ease 0s;
+        }
+        @media only screen and (max-width: 479px){
+            .form-horizontal .form-group{
+                padding: 0 25px;
+            }
+            .form-horizontal .form-group i{
+                left: 45px;
+            }
+            .form-horizontal .btn{
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+{% if not sp_ison %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <form class="form-horizontal" action='{% url 'upload_lg' %}' method='POST'>
+                    {% csrf_token %}
+                    <span class="heading">员工通道</span>
+                    <span style='color:red;'>{{ errormsg }}</span>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name='username' id="inputEmail3" placeholder="用户名">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="form-group help">
+                        <input type="password" class="form-control" id="inputPassword3" name='password' placeholder="密　码">
+                        <i class="fa fa-lock"></i>
+                        <a href="#" class="fa fa-question-circle"></a>
+                    </div>
+                    <div class="form-group">
+
+                        <button type="submit" class="btn btn-default">登录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if sp_ison %}
+    <img src="{% static 'images/title_fup.png' %}" style="height: 5%;margin-left: 29%"><div style="position: absolute;top: 3%;right: 5%">员工{{ username }}已登录  <a href="{% url 'sp_logout' %}">logout</a></div>
+    <div style="margin: 10%;margin-bottom: 3%;margin-top: 3%;border-style: solid;padding-left: 7%;border-radius: 50px"><div style="width:100%"><form action="{% url 'upload_sel' %}" method="post">{% csrf_token %}<select style="width: 20%" name="whc"><option value="good" {% if whc == 'good' %}selected="selected"{% endif %}>商品</option><option value="pet"{% if whc == 'pet' %}selected="selected"{% endif %}>宠物</option><option value="oder" {% if whc == 'oder' %}selected="selected"{% endif %}>订单</option></select>
+        <select style="width: 20%;margin-left: 1%" name="optype"><option  value="add" {% if opty == 'add' %}selected="selected"{% endif %}>{% if whc == 'pet' or whc == 'good' %}添加{% endif %}{% if whc == 'oder' %}全部{% endif %}</option><option  value="change" {% if opty == 'change' %}selected="selected"{% endif %}>{% if whc == 'pet' or whc == 'good' %}修改{% endif %}{% if whc == 'oder' %}未发货{% endif %}</option></select>
+       <input type="submit" value="GO"><p style="color: red">{{ emsg }}</p></form></div>
+    </div>
+    <div style="width: 100%;padding-left: 10%;padding-right: 10%;padding-bottom: 200px">
+    {% if whc == 'pet' and opty == 'add'%}
+        <form method="post" action="{% url 'upload' whc opty%}" style="width: 100%;padding: 10%;padding-top: 0 " enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div style="width: 100%"><label>宠物名：</label><input name="pname" type="text"style="width: 15%"></div><div style="width: 100%"><label>性&nbsp;&nbsp;&nbsp;&nbsp;别：</label><select name="psex" style="width: 15%"><option value="公">公</option><option value="母">母</option></select></div><div style="width: 100%">
+            <label>物&nbsp;&nbsp;&nbsp;&nbsp;种：</label><select name="speci"style="width: 15%"><option value="狗">狗</option><option value="猫">猫</option><option value="其他">其他</option></select></div>
+            <div style="width: 100%"><label style="float:left;">照&nbsp;&nbsp;&nbsp;&nbsp;片：</label><input type="file" name="pimg"  style="float: left"></div>
+            <div style="width: 100%">
+
+        <div class="col-sm-6" style="width: 100%;padding-left: 0;padding-right: 0">
+            <div class="form-group">
+
+                   <label>生&nbsp;&nbsp;&nbsp;&nbsp;日：</label><input  type="text"  id="datetimepicker3"  name="pbirth" style="width: 15%">
+
+
+
+            </div>
+        </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker3').datetimepicker({
+                 locale: 'zh-cn',
+                 viewMode: 'days',
+			     format: 'YYYY-MM-DD'
+                });
+            });
+        </script>
+
+        <input type="submit" value="提交">
+        </form>
+
+        {% endif %}
+    {% if whc == 'pet' and opty == 'change'%}
+        <form method="post" action="{% url 'upload' whc opty%}" style="width: 100%" enctype="multipart/form-data">
+        <p style="color: red"></p>
+        {% csrf_token %}
+        <div style="width: 100%;height: 20px"><p style="padding-left: 7%;width: 18%;float: left;font-weight: bolder">宠物名</p><p style="padding-left: 7%;width: 16%;float: left;font-weight: bolder">性别</p><p style="padding-left: 4%;width: 10%;float: left;font-weight: bolder">生日</p><p style="padding-left: 7%;width: 17%;float: left;font-weight: bolder">物种</p><p style="padding-left: 3%;width: 29%;float: left;font-weight: bolder">图片[如无需修改则不用填写]</p></div>
+{% for pet in page_list %}
+    <div style="width: 100%;padding-bottom: 5px;">
+    <input style="visibility: hidden;position: absolute" name="pid" value="{{ pet.petid }}">
+    <input name="pname{{ pet.petid }}" value="{{ pet.petname }}" style="width: 18%;height: 5%">
+    <select name="psex{{ pet.petid }}"style="width: 16%"><option value="公" {% if pet.petsex == "公" %}selected="selected"{% endif %}>公</option><option value="母"{% if pet.petsex == "母" %}selected="selected"{% endif %}>母</option></select>
+    <input name="pbir{{ pet.petid }}" value="{{ pet.petbirth }}" style="width: 10%" type="date">
+    <select name="speci{{ pet.petid }}" style="width: 17%"><option value="狗" {% if pet.speci == "狗" %}selected="selected"{% endif %}>狗</option><option value="猫" {% if pet.speci == "猫" %}selected="selected"{% endif %}>猫</option><option value="其他" {% if pet.speci == "其他" %}selected="selected"{% endif %}>其他</option></select>
+
+    <img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" style="width: 3%;height: 3%;margin-left: 2%"><input type="file" name="img{{ pet.petid }}" style="width: 32%;float: right;padding-right: 4%;padding-top: 0.5%"></div> {% endfor %}
+        <input type="submit">
+        </form>
+	<div class="row page_num_container">
+			<div id="pagination">
+    <ul class="pager">
+    {% if page_list.has_previous %}
+    <li><a href="?page={{ page_list.previous_page_number }}">&laquo;上一页</a></li>
+    {% else %}
+    <li>&laquo;上一页</li>
+    {% endif %}
+     <li>{{ page_list.number }}/{{ page_list.paginator.num_pages }}</li>
+    {% if page_list.has_next %}
+      <li><a href="?page={{ page_list.next_page_number }}">下一页 &raquo;</a></li>
+    {% else %}
+      <li>下一页 &raquo;</li>
+    {% endif %}
+   </ul>
+</div>
+		</div>
+    {% endif %}
+    {% if whc == 'good' and opty == 'change'%}
+         <form method="post" action="{% url 'upload' whc opty%}" style="width: 100%" enctype="multipart/form-data">
+        <p style="color: red"></p>
+        {% csrf_token %}
+        <div style="width: 100%;height: 20px;padding-bottom: 5px;"><p style="padding-left: 7%;width: 20%;float: left;font-weight: bolder">商品名</p><p style="padding-left: 3%;width: 7%;float: left;font-weight: bolder">数量</p><p style="padding-left: 4%;width: 7%;float: left;font-weight: bolder">价格</p><p style="padding-left: 3%;width: 10%;float: left;font-weight: bolder">商品种类</p><p style="padding-left: 7%;width: 17%;float: left;font-weight: bolder">物种</p><p style="padding-left: 3%;width: 29%;float: left;font-weight: bolder">图片[如无需修改则不用填写]</p></div>
+{% for good in page_list %}
+    <div style="width: 100%;padding-bottom: 5px;">
+    <input style="visibility: hidden;position: absolute" name="gid" value="{{ good.goodsid}}">
+    <input name="gname{{ good.goodsid}}" value="{{ good.goodname }}" style="width: 20%;height: 5%;vertical-align: top;border-radius: 5px;margin-right: 1%">
+    <input name="gnum{{ good.goodsid}}"style="width: 7%;vertical-align: top;border-radius: 5px;margin-right: 1%" type="number" min="1" value="{{ good.goodnum }}">
+    <input name="gprc{{ good.goodsid}}" value="{{ good.goodprice }}" style="width: 5%;vertical-align: top;border-radius: 5px;margin-right: 1%" type="number" min="0" step="0.01">
+    <select name="gty{{ good.goodsid}}" style="width: 10%;vertical-align: top;border-radius: 5px;margin-right: 1%"><option value="宠物食品" {% if good.goodtype == "宠物食品" %}selected="selected"{% endif %}>宠物食品</option><option value="宠物衣物" {% if good.goodtype == "宠物衣物" %}selected="selected"{% endif %}>宠物衣物</option><option value="宠物玩具" {% if good.goodtype == "宠物玩具" %}selected="selected"{% endif %}>宠物玩具</option><option value="药品" {% if good.goodtype == "药品" %}selected="selected"{% endif %}>药品</option><option value="清洁用品"  {% if good.goodtype == "清洁用品" %}selected="selected"{% endif %}>清洁用品</option></select>
+        <textarea name="gtxt{{ good.goodsid }}" style="width:14%;font-size: 10px;resize: none;height:3%;vertical-align: top;border-radius: 5px;margin-right: 1%" >{{ good.goodtext }}</textarea>
+    <img src="/static/images/goods/good{{ good.goodsid }}.png" style="width: 3%;height: 3%;margin-left: 2%"><input type="file" name="img{{ good.goodsid}}" style="width: 32%;float: right;padding-right: 4%;padding-top: 0.5%"></div> {% endfor %}
+        <input type="submit">
+        </form>
+	<div class="row page_num_container">
+			<div id="pagination">
+    <ul class="pager">
+    {% if page_list.has_previous %}
+    <li><a href="?page={{ page_list.previous_page_number }}">&laquo;上一页</a></li>
+    {% else %}
+    <li>&laquo;上一页</li>
+    {% endif %}
+     <li>{{ page_list.number }}/{{ page_list.paginator.num_pages }}</li>
+    {% if page_list.has_next %}
+      <li><a href="?page={{ page_list.next_page_number }}">下一页 &raquo;</a></li>
+    {% else %}
+      <li>下一页 &raquo;</li>
+    {% endif %}
+   </ul>
+</div>
+		</div>
+    {% endif %}
+    {% if whc == 'good' and opty == 'add'%}
+<form method="post" action="{% url 'upload' whc opty%}" style="width: 100%;padding: 10%;padding-top: 0 " enctype="multipart/form-data" >
+        {% csrf_token %}
+        <div style="width: 100%"><label>商品名：</label><input name="gname" type="text"style="width: 15%"></div><div style="width: 100%"><label>货物数：</label><input type="number" name="gnum" style="width: 15%" min="1"></div><div style="width: 100%"><label>价&nbsp;&nbsp;&nbsp;&nbsp;格：</label><input type="number" name="gprice" style="width: 15%" min="1" step="0.01"></div><div style="width: 100%">
+            <label>类&nbsp;&nbsp;&nbsp;&nbsp;别：</label><select name="gtype"style="width: 15%"><option value="宠物食品">宠物食品</option><option value="宠物衣物">宠物衣物</option><option value="宠物玩具">宠物玩具</option><option value="药品">药品</option><option value="清洁用品">清洁用品</option></select></div>
+            <div style="width: 100%"><label style="float:left;">图&nbsp;&nbsp;&nbsp;&nbsp;片：</label><input type="file" name="gimg"  ></div>
+    <div style="width: 100%"><label style="float:left;">详&nbsp;&nbsp;&nbsp;&nbsp;细：</label><input name="gtext" type="text" style="width: 15%;height:150px"></div>
+
+
+
+        <input type="submit" value="提交">
+        </form>
+
+{% endif %}
+    {% if whc == 'oder'%}
+        {% for od in page_list %}
+                <div style="width: 100%;border-style: solid;margin-bottom: 10px;border-radius: 25px;padding: 20px;background-image:url({% static 'images/backg2.png' %});
+
+            background-size:100% 100%;background-repeat: no-repeat;">
+                    <div style="width: 100%;height:30px;">
+                        <p style="width: 40%;float: left">订单号:{{ od.oderid }}</p><p style="width: 40%;float: left">时间:{{ od.time }}</p><p style="width: 10%;float: left">总价:{{ od.totalprice }}</p></div>
+                <form style="width: 100%;height: 30px;" method="post" action="{% url 'ode_up' od.oderid %}"> {% csrf_token %}收货地址：<input name="adres" value="{{ od.useradress }}" style="width: 30%;margin-right: 2%;border-radius: 3px">收货电话：<input name="phone" value="{{ od.phone }}" style="width: 20%;border-radius: 3px"><select style="margin-right: 13%;margin-left: 3%;width: 9%;border-radius: 4px" name="odes"><option value="未发货" {% if od.oders == "未发货" %}selected="selected"{% endif %}>未发货</option><option value="已发货" {% if od.oders == "已发货" %}selected="selected"{% endif %}>已发货</option></select><input type="submit" style="border-radius: 15px" value="提交"></form>
+                    <div style="width: 100%">
+                        {% for l in od.oderitem %}
+                            <div style="width: 100%;
+    height: 40px;">
+                                <p style="float: left;
+    width: 30%;
+    margin-right: 10%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;">商品名:{{ l.gname }}</p><p style="    float: left;
+    margin-right: 60px;">数量:{{ l.gnum }}</p><p style="    right: 30%;
+    position: absolute;">价格:{{ l.gp }}</p></div>
+                        {% endfor %}</div></div>
+            {% endfor %}
+        <div class="row page_num_container">
+			<div id="pagination">
+    <ul class="pager">
+    {% if page_list.has_previous %}
+    <li><a href="?page={{ page_list.previous_page_number }}">&laquo;上一页</a></li>
+    {% else %}
+    <li>&laquo;上一页</li>
+    {% endif %}
+     <li>{{ page_list.number }}/{{ page_list.paginator.num_pages }}</li>
+    {% if page_list.has_next %}
+      <li><a href="?page={{ page_list.next_page_number }}">下一页 &raquo;</a></li>
+    {% else %}
+      <li>下一页 &raquo;</li>
+    {% endif %}
+   </ul>
+</div>
+		</div>
+        {% endif %}
+{% endif %}
+
+</div>
+
+
+</body>
+</html>

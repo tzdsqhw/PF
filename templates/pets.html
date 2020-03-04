@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 宠物 {% endblock %}
+{%block body%}
+<!--header end here-->
+<!--about start here-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/categories.css' %}">
+<div class="products" style="min-height: 500.82px">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+                <style>
+                    .daohangd{
+                        width: 25%;position: relative;float: left;padding-left: 10px;
+                        padding-right: 10px;
+
+                    }
+.daohangbutton {
+  display: inline-block;
+  border-radius: 4px;
+
+  border: none;
+ width: 100%;padding: 10px;font-size: 30px;
+    background-color: #e5cd6880;
+    color: #000;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.daohangbutton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.daohangbutton span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.daohangbutton:hover span {
+  padding-right: 25px;
+}
+
+.daohangbutton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+                <a href="{% url 'pets' 'all' %}"><div class="daohangd"><button class="daohangbutton"><img src="{% static 'images/all_icon.png' %}" style="height: 42.7px"><span>全部</span></button></div></a>
+                <a href="{% url 'pets' '猫' %}"><div class="daohangd"><button class="daohangbutton"><img src="{% static 'images/cat_icon.png' %}" style="height: 42.7px"><span>猫</span></button></div></a>
+                <a href="{% url 'pets' '狗' %}"><div class="daohangd"><button class="daohangbutton"><img src="{% static 'images/dog_icon.png' %}" style="height: 42.7px"><span>狗</span></button></div></a>
+                <a href="{% url 'pets' '其他' %}"><div class="daohangd"><button class="daohangbutton"><img src="{% static 'images/other_icon.png' %}" style="height: 42.7px"><span>其他</span></button></div></a>
+
+
+
+
+			</div>
+
+		</div>
+
+		<div class="row products_container">
+			<div class="col">
+
+				<!-- Products -->
+
+				<div class="product_grid" style="position: relative;">
+
+{% for pet in page_list.object_list %}
+					<div class="product" style="position: relative;width: 33.33%;float: left">
+						<div class="product_image"><img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt=""></div>
+
+						<div class="product_content clearfix">
+							<div class="product_info">
+								<div class="product_name"><a href="{% url 'singlepet' pet.petid %}">{{ pet.petname }}</a></div>
+								<div class="product_price">$45.00</div>
+							</div>
+							<div class="product_options">
+								<div class="product_buy product_option"><img src="{% static 'images/home_icon.png' %}" alt=""></div>
+
+							</div>
+						</div>
+					</div>
+{% endfor %}
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row page_num_container">
+			<div id="pagination">
+    <ul class="pager">
+    {% if page_list.has_previous %}
+    <li><a href="?page={{ page_list.previous_page_number }}">&laquo;上一页</a></li>
+    {% else %}
+    <li>&laquo;上一页</li>
+    {% endif %}
+     <li>{{ page_list.number }}/{{ page_list.paginator.num_pages }}</li>
+    {% if page_list.has_next %}
+      <li><a href="?page={{ page_list.next_page_number }}">下一页 &raquo;</a></li>
+    {% else %}
+      <li>下一页 &raquo;</li>
+    {% endif %}
+   </ul>
+</div>
+		</div>
+
+	</div>
+
+	<!-- Sidebar Right -->
+</div>
+
+<!--about end here-->
+<!--footer start here-->
+{%endblock body  %}

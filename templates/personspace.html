@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 个人中心 {% endblock %}
+{%block body%}
+<!--header end here-->
+<!--about start here-->
+    <div style="margin: 10%">
+    <div class="row" style="    margin: 10%;">
+        <div class="col-12">
+
+            <style>
+                .sendbox{
+                    height:280px;
+                    width: 70%;
+                    border-style:solid ;
+                    float: left;
+                    padding: 10px;
+                }
+                .userbox{
+                    padding: 20px;
+                    height: 280px;
+                    width: 30%;
+                    border-style:solid ;
+                    float: left;
+
+
+                }
+                .demobox{
+                    width: 100%;
+                    height: 200px;
+                    border-style:solid ;
+                    padding: 20px;
+                }
+                .sdt{
+                    width: 100%;
+                    height: 80%;
+                    margin-bottom: 15px;
+                }
+                .sdb{
+                    float: right;
+                    height: 30px;
+                    width: 60px;
+                }
+                .likei{
+
+                    float: right;margin-right: 20px
+                ;height: 25px;
+                    width: 25px;
+                    background: url({% static 'images/like0.png'%}) no-repeat;
+                    background-size: 25px 25px;
+                }
+
+
+
+                .daohangd{
+                    width: 25%;position: relative;float: left;padding-left: 10px;
+                    padding-right: 10px;
+
+                }
+                .daohangbutton {
+                    display: inline-block;
+                    border-radius: 4px;
+
+                    border: none;
+                    width: 100%;padding: 10px;font-size: 30px;
+                    background-color: #e5cd6880;
+                    color: #000;
+                    transition: all 0.5s;
+                    cursor: pointer;
+                    margin: 5px;
+                }
+
+                .daohangbutton span {
+                    cursor: pointer;
+                    display: inline-block;
+                    position: relative;
+                    transition: 0.5s;
+                }
+
+                .daohangbutton span:after {
+                    content: '»';
+                    position: absolute;
+                    opacity: 0;
+                    top: 0;
+                    right: -20px;
+                    transition: 0.5s;
+                }
+
+                .daohangbutton:hover span {
+                    padding-right: 25px;
+                }
+
+                .daohangbutton:hover span:after {
+                    opacity: 1;
+                    right: 0;
+                }
+            </style>
+
+            <a href="{% url 'person' 'dem' %}"><div class="daohangd"><button class="daohangbutton"><span>动态</span></button></div></a>
+            <a href="{% url 'person' 'sc'%}"><div class="daohangd"><button class="daohangbutton"><span>购物车</span></button></div></a>
+            <a href="{% url 'person' 'list'%}"><div class="daohangd"><button class="daohangbutton"><span>订单</span></button></div></a>
+            <a href="{% url 'infor'%}"><div class="daohangd"><button class="daohangbutton"><span>修改信息</span></button></div></a>
+
+
+
+        </div>
+
+    </div>
+
+    <div class="col">
+        {% if type == "dem" %}
+
+
+
+
+
+            <div class="row products_container">
+                <div class="col">
+                    {% for dem in page_list.object_list %}
+
+
+
+
+                        <!-- Products -->
+                        <div class="demobox"><div style="width: 100%;height: 80%;margin-bottom: 20px"><p>{{ dem.dmenttext }}</p></div><a style="margin-left:20px">{{ dem.username }}</a><p style="float: left;">{{ dem.create_time }}</p>
+
+                            <a href="javascript:void(0);" class="icon like" id="like{{ dem.dmentid }}"><img class="likei"><p id="likenum{{ dem.dmentid }}" style="float: right">{{ dem.likenum }}</p></a></div>
+
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="row page_num_container">
+                <div id="pagination">
+                    <ul class="pager">
+                        {% if page_list.has_previous %}
+                            <li><a href="?page={{ page_list.previous_page_number }}">&laquo;上一页</a></li>
+                        {% else %}
+                            <li>&laquo;上一页</li>
+                        {% endif %}
+                        <li>{{ page_list.number }}/{{ page_list.paginator.num_pages }}</li>
+                        {% if page_list.has_next %}
+                            <li><a href="?page={{ page_list.next_page_number }}">下一页 &raquo;</a></li>
+                        {% else %}
+                            <li>下一页 &raquo;</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
+
+        {% if type == "sc" %}
+            <script language="javascript">
+                function save(){
+                    document.formcar.action="{% url 'shopcar' %}";
+                    document.formcar.submit();
+                }
+                function send(){
+                    document.formcar.action="{% url 'oder' %}";
+                    document.formcar.submit();
+                }
+            </script>
+            <form style="margin: 10%" method="post" name="formcar" action="">
+                {% csrf_token %}
+                <div style="width: 100%;height: 40px" >
+                    <p style="float: left;width: 30%;margin-right: 10%;">商品</p>
+                    <p style="float: left;margin-right: 60px">数量</p>
+                    <p style="right: 30%;position: absolute">单价</p>
+                </div>
+
+                {% for good in goodlist %}
+
+                    <input style="visibility: hidden;position: absolute" name="gid" value="{{ good.gid }}">
+                    <div style="width: 100%;height: 40px" >
+                        <p style="float: left;width: 30%;margin-right: 10%;	white-space: nowrap;/*强制在一行显示*/
+	text-overflow:ellipsis;/*设置超出内容显示...*/
+	overflow: hidden;">{{ good.gn }}</p><input type="number" value="{{ good.gnum }}" style="float: left;margin-right: 60px" name="goodnum"><p style="right: 30%;position: absolute">{{ good.gp }}</p></div>
+                {% endfor %}
+                <input style="visibility: hidden;position: absolute" name="ap" value="{{ ap }}">
+                <input type="submit" value="保存" onclick="save()">
+                <input type="submit" value="提交" onclick="send()">
+            </form>
+        {% endif %}
+        {% if type == "list" %}
+            {% for od in alllist %}
+                <div style="width: 100%;border-style: solid;margin-bottom: 10px">
+                    <div style="width: 100%;height:40px;">
+                        <p style="width: 45%;float: left">订单号:{{ od.oderid }}</p><p style="width: 45%;float: left">时间:{{ od.time }}</p></div>
+                    <div style="width: 100%">
+                        {% for l in od.oderitem %}
+                            <div style="width: 100%;
+    height: 40px;">
+                                <p style="float: left;
+    width: 30%;
+    margin-right: 10%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;">商品名:{{ l.gname }}</p><p style="    float: left;
+    margin-right: 60px;">数量:{{ l.gnum }}</p><p style="    right: 30%;
+    position: absolute;">价格:{{ l.gp }}</p></div>
+                        {% endfor %}</div></div>
+            {% endfor %}
+        {% endif %}
+    </div></div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 商城{% endblock %}
+{%block body%}
+<!--header end here-->
+    <a href="{% url 'index' %}">您的订单{{ ode.oderid }}已受理 点击此处返回首页</a>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 购物车{% endblock %}
+{%block body%}
+<!--header end here-->
+<!--about start here-->
+    {% if ison %}
+<script language="javascript">
+function save(){
+    document.formcar.action="{% url 'shopcar' %}";
+    document.formcar.submit();
+}
+function send(){
+    document.formcar.action="{% url 'oder' %}";
+    document.formcar.submit();
+}
+</script>
+    <form style="margin: 10%" method="post" name="formcar" action="">
+    {% csrf_token %}
+    <div style="width: 100%;height: 40px" >
+        <p style="float: left;width: 30%;margin-right: 10%;">商品</p>
+        <p style="float: left;margin-right: 60px">数量</p>
+        <p style="float: right;margin-right: 160px">单价</p>
+    </div>
+
+    {% for good in goodlist %}
+
+        <input style="visibility: hidden;position: absolute" name="gid" value="{{ good.gid }}">
+        <div style="width: 100%;height: 40px" >
+        <p style="float: left;width: 30%;margin-right: 10%;	white-space: nowrap;/*强制在一行显示*/
+	text-overflow:ellipsis;/*设置超出内容显示...*/
+	overflow: hidden;">{{ good.gn }}</p><input type="number" value="{{ good.gnum }}" style="float: left;margin-right: 60px" name="goodnum" min="1"><p style="float: right;margin-right: 160px;text-align: center">{{ good.gp }}</p><a href="" id="dei{{ good.gid }}"><img style="right: 15%;position: absolute;height: 20px" src="{% static 'images/delet.png' %}"></a></div>
+        <script>
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+        $("#dei{{ good.gid }}").click(function(){
+            obj = {
+                gid : {{ good.gid }},ison:'{{ ison }}'
+
+            }
+            $.post("{% url 'delgood' %}",obj,function(i){
+               if('{{ ison }}' == 'True' ){
+                if(i.success){
+                    alert('成功从购物车中移除')
+                }else{
+                    alert('失败')
+                }}
+               else {alert(('请先登录'))}
+            })
+        })
+    </script>
+    {% endfor %}
+    <input style="visibility: hidden;position: absolute" name="ap" value="{{ ap }}">收货地址：<input name="adres" value="{{ adres }}" style="margin-right: 10px;width: 47%">收货电话：<input name="phone" value="{{ phone }}" style="width: 22%">
+    <input type="submit" value="保存" onclick="save()">
+    <input type="submit" value="提交" onclick="send()">
+    </form>
+    {% endif %}
+    {% if not ison %}
+        <a href="{% url 'login' %}" >先登录</a>
+    {% endif %}
+{% endblock %}

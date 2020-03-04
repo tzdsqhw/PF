@@ -1,0 +1,113 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{%block title%}
+{%endblock title%}</title>
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+<!-- Custom Theme files -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Horse Farm Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--Google Fonts-->
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Baumans' rel='stylesheet' type='text/css'>
+<!-- start-->
+ <link rel="stylesheet" href="{% static 'css/flexslider.css' %}"type="text/css" media="screen" />
+
+<link rel="stylesheet" href="{%static 'css/style3.css' %}" type="text/css">
+<style type="text/css">
+    @font-face {
+        font-family: cute;src: url("{% static 'fonts/MFMiMeng_Noncommercial-Regular.ttf' %}");
+    }
+</style>
+</head>
+<body>
+<!--header start here-->
+ <div class="header">
+	<div class="container">
+		 <div class="header-main">
+				<div class="logo">
+					<h1><a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" style="height: 65px"></a></h1>
+				</div>
+				<div class="top-nav">
+				<nav class="cl-effect-20">
+					   <span class="menu"> <img src="{% static 'images/icon.png' %}" alt=""/></span>
+					<ul class="res">
+					   <li><a href="{% url 'index' %}" class="active">首页</a></li>
+                        <li><a href="{% url 'pets' 'all'%}">宠物</a></li>
+                        <li><a href="{% url 'shop' 'all'%}">商城</a></li>
+                        <li><a href="{% url 'demp' %}">用户广场</a></li>
+                        <li><a>服务</a></li>
+						<li><a href="{% url 'about' %}">About</a></li>
+
+                        {% if ison == False  %}
+						<li><a href="{% url 'login' %}">登录</a>|<a href="{% url 'register' %}">注册</a></li>
+                        {% endif %}
+                        {% if ison == True  %}
+						<li><a href="{% url 'person' 'dem'%}">个人中心</a>|<a href="{% url 'logout' %}">退出登录</a></li>
+                        {% endif %}
+				   </ul>
+				</nav>
+					<!-- script-for-menu -->
+						 <script>
+						   $( "span.menu" ).click(function() {
+							 $( "ul.res" ).slideToggle( 300, function() {
+							 // Animation complete.
+							  });
+							 });
+						</script>
+		        <!-- /script-for-menu -->
+				</div>
+		 <div class="clearfix"> </div>
+	  </div>
+	</div>
+ </div>
+{%block body%}
+{%endblock body%}
+<div class="footer">
+	<div class="container">
+		<div class="footer-main">
+		    <div class="col-md-3 ftr-grid">
+		    	<h3>About</h3>
+		    	<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</p>
+		    </div>
+		    <div class="col-md-3 ftr-grid">
+		    	<h3>Wild life</h3>
+		    	<ul>
+		    		<li><a href="#">Qui blanditiis praesentium</a></li>
+		    		<li><a href="#">Accusam dignissimos ducimu</a></li>
+		    		<li><a href="#">deleniti atque  molestias.</a></li>
+		    		<li><a href="#">voluptatum deleniti atque.</a></li>
+		    	</ul>
+		    </div>
+		    <div class="col-md-3 ftr-grid">
+		    	<h3>百度一下</h3>
+		    	<input type="text" value="请输入关键字" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Email';}">
+		    	<input type="submit" value="搜索">
+		    </div>
+		    <div class="col-md-3 ftr-grid">
+		    	<h3>Follow Us</h3>
+		    	<ul>
+		    		<li><a href="#">Facebook</a></li>
+		    		<li><a href="#">Twitter</a></li>
+		    		<li><a href="#">Google +</a></li>
+		    		<li><a href="#">Skype</a></li>
+		    	</ul>
+		    </div>
+			<div class="clearfix"> </div>
+		</div>
+		<div class="copy-right">
+
+		   </div>
+	</div>
+</div>
+<!--footer end here-->
+</body>
+</html>
