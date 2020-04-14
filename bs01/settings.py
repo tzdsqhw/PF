@@ -126,3 +126,4 @@ STATICFILES_DIRS = (
 UPLOADFILES_DIRS = os.path.join(BASE_DIR, 'bysjapp/static/images/userhead')
 UPLOADFILES_PET = os.path.join(BASE_DIR, 'bysjapp/static/images/pet')
 UPLOADFILES_GOOD = os.path.join(BASE_DIR, 'bysjapp/static/images/goods')
+UPLOADFILES_TABLE = os.path.join(BASE_DIR, 'templates')

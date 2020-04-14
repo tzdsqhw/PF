@@ -62,7 +62,7 @@
 body
 {
 	font-family: 'Open Sans', sans-serif;
-	font-size: 14px;
+
 	font-weight: 400;
 	background: #FFFFFF;
 	color: #2f2f2f;
@@ -84,7 +84,6 @@ p
 {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
-	line-height: 2;
 	font-weight: 400;
 	color: #929191;
 	-webkit-font-smoothing: antialiased;

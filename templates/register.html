@@ -24,7 +24,7 @@
 
 </head>
 <body >
-
+{% if not ison %}
 <style>
     .bg-admin-login {
 
@@ -217,6 +217,27 @@
         </li>
     </ul>
 </div></div>
+{% endif %}
+{% if  ison %}
+    <div class="box">
+   <a href="{% url 'index' %}"> <h2>你已登录<span class="clock">6</span>秒后自动跳转</h2></a>
+</div>
+<script>
+	var t = 6;
+	var time = document.getElementsByClassName("clock")[0];
 
+	function fun() {
+		t--;
+		time.innerHTML = t;
+		if(t <= 0) {
+            // location.href = "https://www.baidu.com";
+            document.location = '{% url 'index' %}';
+            			clearInterval(inter);
+        }
+	}
+	var inter = setInterval("fun()", 1000);
+</script>
+
+{% endif %}
 </body>
 </html>

@@ -15,9 +15,10 @@ function send(){
     document.formcar.submit();
 }
 </script>
-    <form style="margin: 10%" method="post" name="formcar" action="">
+        <div style="min-height: 700px">
+    <form style="margin-left: 8%;margin-right: 8%;margin-top: 3%;margin-bottom: 4%;border: #d2992b solid 3px;border-radius: 30px" method="post" name="formcar" action="">
     {% csrf_token %}
-    <div style="width: 100%;height: 40px" >
+    <div style="width: 100%;height: 40px;background:#d2992b ;padding: 8px;border-radius: 25px 25px 0 0 " >
         <p style="float: left;width: 30%;margin-right: 10%;">商品</p>
         <p style="float: left;margin-right: 60px">数量</p>
         <p style="float: right;margin-right: 160px">单价</p>
@@ -26,10 +27,10 @@ function send(){
     {% for good in goodlist %}
 
         <input style="visibility: hidden;position: absolute" name="gid" value="{{ good.gid }}">
-        <div style="width: 100%;height: 40px" >
-        <p style="float: left;width: 30%;margin-right: 10%;	white-space: nowrap;/*强制在一行显示*/
+        <div style="width: 100%;height: 40px;padding: 8px;border-bottom: #000 solid  1px;" >
+        <p style="float: left;width: 23%;margin-right: 3%;	white-space: nowrap;/*强制在一行显示*/
 	text-overflow:ellipsis;/*设置超出内容显示...*/
-	overflow: hidden;">{{ good.gn }}</p><input type="number" value="{{ good.gnum }}" style="float: left;margin-right: 60px" name="goodnum" min="1"><p style="float: right;margin-right: 160px;text-align: center">{{ good.gp }}</p><a href="" id="dei{{ good.gid }}"><img style="right: 15%;position: absolute;height: 20px" src="{% static 'images/delet.png' %}"></a></div>
+	overflow: hidden;">{{ good.gn }}</p><p style="float: left">|</p><input type="number" value="{{ good.gnum }}" style="float: left;margin-right: 12%;margin-left: 12%" name="goodnum" min="1"><p style="float: left">|</p><p style="float: right;margin-right: 160px;text-align: center">{{ good.gp }}</p><a href="" id="dei{{ good.gid }}"><img style="right: 15%;position: absolute;height: 20px" src="{% static 'images/delet.png' %}"></a></div>
         <script>
         $.ajaxSetup({
             data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
@@ -51,12 +52,13 @@ function send(){
         })
     </script>
     {% endfor %}
+    <div style="width: 100%;padding: 8px">
     <input style="visibility: hidden;position: absolute" name="ap" value="{{ ap }}">收货地址：<input name="adres" value="{{ adres }}" style="margin-right: 10px;width: 47%">收货电话：<input name="phone" value="{{ phone }}" style="width: 22%">
     <input type="submit" value="保存" onclick="save()">
-    <input type="submit" value="提交" onclick="send()">
+    <input type="submit" value="提交" onclick="send()"></div>
     </form>
     {% endif %}
     {% if not ison %}
         <a href="{% url 'login' %}" >先登录</a>
-    {% endif %}
+    {% endif %}</div>
 {% endblock %}

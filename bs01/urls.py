@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^addgood/$',views.addg, name='addgood'),
     url(r'^delgood/$',views.deletg, name='delgood'),
     url(r'^deld/$',views.deletd, name='deld'),
+    url(r'^delc/$',views.deletc, name='delc'),
     url(r'^shopcar/$',views.shopcar,name="shopcar"),
     url(r'^oder/$',views.oder,name='oder'),
     url(r'^information/$',views.informationcheck,name='infor'),
@@ -45,6 +46,16 @@ urlpatterns = [
     url(r'^admin/upload_sel/$', views.upload_sel, name='upload_sel'),
     url(r'^admin/upload/(?P<whc>\w+)_(?P<optype>\w+)/$',views.upload,name="upload"),
     url(r'^admin/ode_up/(?P<oid>\w+)$',views.oder_up,name="ode_up"),
+    url(r'^singlenew/(?P<ns>\w+)/$',views.singnew,name="singlenew"),
+    url(r'^follow/$', views.follow, name='follow'),
+    url(r'^serv/$', views.serv, name='serv'),
+    url(r'^map/$', views.map, name='map'),
+    url(r'^addc/(?P<did>\w+)/$', views.addcom, name='addc'),
+    url(r'^message/$', views.message, name='message'),
+    url(r'^user_sex_pietable/$', views.user_sex_pietable, name='user_sex_pietable'),
+    url(r'^sell_bartable/$', views.sell_bartable, name='sell_bartable'),
+    url(r'^sell_linetable/$', views.sell_linetable, name='sell_linetable'),
+    url(r'^admin/analysis/$', views.analysis, name='analysis'),
 
 
 ]

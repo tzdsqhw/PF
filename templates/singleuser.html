@@ -7,17 +7,56 @@
                 <div style="margin-right: 10%;margin-left: 10%">
                 <div style="position: relative;width: 100%;height:400px;background:url({% static 'images/h2.jpg' %}) "><div style="position: absolute;
 top: 50%;
-left: 50%;margin-top:-90px;margin-left:-90px;width: 180px;height: 180px;border-radius: 50%;background: #000000;align-content: center"><img style="background: #ffffff;width: 90%;height: 90%;border-radius: 50%;margin-left: 5%;margin-top: 5%" src="/static/images/userhead/{{ user.head }}"></div></div>
+left: 50%;margin-top:-90px;margin-left:-90px;width: 180px;height: 180px;align-content: center"><img style="background: #ffffff;width: 90%;height: 90%;border-radius: 50%;margin-left: 5%;margin-top: 5%;border: #d2992b solid 4px" src="/static/images/userhead/{{ user1.head }}">{% if ison %}<a href="javascript:void(0);" id="follow"><button  style="border: #d2992b 3px solid;border-radius: 7px;background: #7C7C7C;color: #d2992b;width: 60%;margin-top: 10px;margin-right: 20%;margin-left: 20%"><img style="width: 25px;height: 25px;margin-right: 5px" id="folicon" src="/static/images/{{ ficon }}.png"><p id="fbu">{{ ftxt }}</p></button></a>{% endif %}</div></div>
+                   <script>
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+        $("#follow").click(function(){
+            obj = {
+                uid : {{ user1.userid }}
+            }
+            $.post("{% url 'follow' %}",obj,function(i){
+
+                if(i.success){
+                    if(i.type=="1"){
+                        document.getElementById('folicon').src="{% static 'images/yf.png'%}";
+
+                        alert('关注成功');
+                        }
+                    else if(i.type=="2"){
+                        document.getElementById('folicon').src="{% static 'images/hxf.png'%}";
+                        alert('关注成功');
+                        }
+                    else if(i.type=="3"){
+                        document.getElementById('folicon').src="{% static 'images/wf.png'%}";
+                        alert('取消关注成功');
+                        }
+                    else if(i.type=="4"){
+                        document.getElementById('folicon').src="{% static 'images/bf.png'%}";
+                        alert('取消关注成功');
+                        }
+
+                    document.getElementById('fbu').innerHTML=i.txt;
+                }else{
+
+                    alert('操作失败');
+                }
+            })
+        })
+    </script>
                     {% for dem in page_list.object_list %}
 
 
 
 
                         <!-- Products -->
-                        <div style="   width: 100%;
+                        <div style="  width: 100%;
         height: 200px;
          border-style:solid ;
-        padding: 20px;"><div style="width: 100%;height: 80%;margin-bottom: 20px"><p>{{ dem.dmenttext }}</p></div><a style="margin-left:20px">{{ dem.username }}</a><p style="float: left;">{{ dem.create_time }}</p>
+        margin-top: 5px;
+        border-radius: 8px;
+        padding: 10px;"><div style="width: 100%;height: 80%;margin-bottom: 20px"><p style="border-radius: 8px ;background-color: #c7ddef60;height: 100%;padding: 5px">{{ dem.dmenttext }}</p></div><a style="margin-left:20px">{{ dem.username }}</a><p style="float: left;">{{ dem.create_time }}</p>
 
                             <a href="javascript:void(0);" class="icon like" id="like{{ dem.dmentid }}">{% if  dem.likeed == False %}
         <img src="{% static 'images/like0.png'%}" id="likei{{ dem.dmentid }}" style=" float: right;height: 25px;

@@ -153,7 +153,7 @@
 </head>
 <body>
 {% if not sp_ison %}
-    <div class="container">
+    <div class="container" style="margin-bottom: 500px">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
                 <form class="form-horizontal" action='{% url 'upload_lg' %}' method='POST'>
@@ -167,7 +167,13 @@
                     <div class="form-group help">
                         <input type="password" class="form-control" id="inputPassword3" name='password' placeholder="密　码">
                         <i class="fa fa-lock"></i>
-                        <a href="#" class="fa fa-question-circle"></a>
+                        <script>
+function myFunction()
+{
+    alert("无法登陆？您可能已被移出管理员");
+}
+</script>
+                        <a onclick="myFunction()"  class="fa fa-question-circle"></a>
                     </div>
                     <div class="form-group">
 
@@ -188,7 +194,7 @@
     {% if whc == 'pet' and opty == 'add'%}
         <form method="post" action="{% url 'upload' whc opty%}" style="width: 100%;padding: 10%;padding-top: 0 " enctype="multipart/form-data" >
         {% csrf_token %}
-        <div style="width: 100%"><label>宠物名：</label><input name="pname" type="text"style="width: 15%"></div><div style="width: 100%"><label>性&nbsp;&nbsp;&nbsp;&nbsp;别：</label><select name="psex" style="width: 15%"><option value="公">公</option><option value="母">母</option></select></div><div style="width: 100%">
+        <div style="width: 100%"><label>宠物名：</label><input name="pname" type="text"style="width: 15%"></div><div style="width: 100%"><label>性&nbsp;&nbsp;&nbsp;&nbsp;别：</label><select name="psex" style="width: 15%"><option value="公">公</option><option value="母">母</option></select></div><div style="width: 100%"><label>价&nbsp;&nbsp;&nbsp;&nbsp;格：</label><input type="number" name="pprice" style="width: 15%" min="1" step="0.01"></div><div style="width: 100%">
             <label>物&nbsp;&nbsp;&nbsp;&nbsp;种：</label><select name="speci"style="width: 15%"><option value="狗">狗</option><option value="猫">猫</option><option value="其他">其他</option></select></div>
             <div style="width: 100%"><label style="float:left;">照&nbsp;&nbsp;&nbsp;&nbsp;片：</label><input type="file" name="pimg"  style="float: left"></div>
             <div style="width: 100%">
@@ -221,15 +227,16 @@
         <form method="post" action="{% url 'upload' whc opty%}" style="width: 100%" enctype="multipart/form-data">
         <p style="color: red"></p>
         {% csrf_token %}
-        <div style="width: 100%;height: 20px"><p style="padding-left: 7%;width: 18%;float: left;font-weight: bolder">宠物名</p><p style="padding-left: 7%;width: 16%;float: left;font-weight: bolder">性别</p><p style="padding-left: 4%;width: 10%;float: left;font-weight: bolder">生日</p><p style="padding-left: 7%;width: 17%;float: left;font-weight: bolder">物种</p><p style="padding-left: 3%;width: 29%;float: left;font-weight: bolder">图片[如无需修改则不用填写]</p></div>
+        <div style="width: 100%;height: 20px"><p style="padding-left: 5%;width: 10%;float: left;font-weight: bolder">宠物名</p><p style="padding-left: 4%;width: 12%;float: left;font-weight: bolder">性别</p><p style="padding-left: 4%;width: 10%;float: left;font-weight: bolder">生日</p><p style="padding-left: 3%;width: 7%;float: left;font-weight: bolder">物种</p><p style="padding-left: 3%;width: 7%;float: left;font-weight: bolder">价格</p><p style="padding-left: 5%;width: 13%;float: left;font-weight: bolder">状态</p><p style="padding-left: 3%;width: 35%;float: left;font-weight: bolder">图片[如无需修改则不用填写]</p></div>
 {% for pet in page_list %}
     <div style="width: 100%;padding-bottom: 5px;">
     <input style="visibility: hidden;position: absolute" name="pid" value="{{ pet.petid }}">
-    <input name="pname{{ pet.petid }}" value="{{ pet.petname }}" style="width: 18%;height: 5%">
-    <select name="psex{{ pet.petid }}"style="width: 16%"><option value="公" {% if pet.petsex == "公" %}selected="selected"{% endif %}>公</option><option value="母"{% if pet.petsex == "母" %}selected="selected"{% endif %}>母</option></select>
+    <input name="pname{{ pet.petid }}" value="{{ pet.petname }}" style="width: 10%;height: 5%">
+    <select name="psex{{ pet.petid }}"style="width: 12%"><option value="公" {% if pet.petsex == "公" %}selected="selected"{% endif %}>公</option><option value="母"{% if pet.petsex == "母" %}selected="selected"{% endif %}>母</option></select>
     <input name="pbir{{ pet.petid }}" value="{{ pet.petbirth }}" style="width: 10%" type="date">
-    <select name="speci{{ pet.petid }}" style="width: 17%"><option value="狗" {% if pet.speci == "狗" %}selected="selected"{% endif %}>狗</option><option value="猫" {% if pet.speci == "猫" %}selected="selected"{% endif %}>猫</option><option value="其他" {% if pet.speci == "其他" %}selected="selected"{% endif %}>其他</option></select>
-
+    <select name="speci{{ pet.petid }}" style="width: 7%"><option value="狗" {% if pet.speci == "狗" %}selected="selected"{% endif %}>狗</option><option value="猫" {% if pet.speci == "猫" %}selected="selected"{% endif %}>猫</option><option value="其他" {% if pet.speci == "其他" %}selected="selected"{% endif %}>其他</option></select>
+<input name="pprc{{ pet.petid}}" value="{{ pet.petprice }}" style="width: 7%;" type="number" min="0" step="0.01">
+    <select name="ppt{{ pet.petid }}"style="width: 12%"><option value="未出售" {% if pet.type == "未出售" %}selected="selected"{% endif %}>未出售</option><option value="已出售"{% if pet.type == "已出售" %}selected="selected"{% endif %}>已出售</option></select>
     <img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" style="width: 3%;height: 3%;margin-left: 2%"><input type="file" name="img{{ pet.petid }}" style="width: 32%;float: right;padding-right: 4%;padding-top: 0.5%"></div> {% endfor %}
         <input type="submit">
         </form>
@@ -288,10 +295,10 @@
     {% if whc == 'good' and opty == 'add'%}
 <form method="post" action="{% url 'upload' whc opty%}" style="width: 100%;padding: 10%;padding-top: 0 " enctype="multipart/form-data" >
         {% csrf_token %}
-        <div style="width: 100%"><label>商品名：</label><input name="gname" type="text"style="width: 15%"></div><div style="width: 100%"><label>货物数：</label><input type="number" name="gnum" style="width: 15%" min="1"></div><div style="width: 100%"><label>价&nbsp;&nbsp;&nbsp;&nbsp;格：</label><input type="number" name="gprice" style="width: 15%" min="1" step="0.01"></div><div style="width: 100%">
-            <label>类&nbsp;&nbsp;&nbsp;&nbsp;别：</label><select name="gtype"style="width: 15%"><option value="宠物食品">宠物食品</option><option value="宠物衣物">宠物衣物</option><option value="宠物玩具">宠物玩具</option><option value="药品">药品</option><option value="清洁用品">清洁用品</option></select></div>
+        <div style="width: 100%"><label>商品名：</label><input name="gname" type="text"style="width: 35%"></div><div style="width: 100%"><label>货物数：</label><input type="number" name="gnum" style="width: 35%" min="1"></div><div style="width: 100%"><label>价&nbsp;&nbsp;&nbsp;&nbsp;格：</label><input type="number" name="gprice" style="width: 35%" min="1" step="0.01"></div><div style="width: 100%">
+            <label>类&nbsp;&nbsp;&nbsp;&nbsp;别：</label><select name="gtype"style="width: 35%"><option value="宠物食品">宠物食品</option><option value="宠物衣物">宠物衣物</option><option value="宠物玩具">宠物玩具</option><option value="药品">药品</option><option value="清洁用品">清洁用品</option></select></div>
             <div style="width: 100%"><label style="float:left;">图&nbsp;&nbsp;&nbsp;&nbsp;片：</label><input type="file" name="gimg"  ></div>
-    <div style="width: 100%"><label style="float:left;">详&nbsp;&nbsp;&nbsp;&nbsp;细：</label><input name="gtext" type="text" style="width: 15%;height:150px"></div>
+    <div style="width: 100%;margin-top: 10px"><label style="float:left;">详&nbsp;&nbsp;&nbsp;&nbsp;细：</label><input name="gtext" type="text" style="width: 35%;height:150px"></div>
 
 
 
@@ -301,13 +308,12 @@
 {% endif %}
     {% if whc == 'oder'%}
         {% for od in page_list %}
-                <div style="width: 100%;border-style: solid;margin-bottom: 10px;border-radius: 25px;padding: 20px;background-image:url({% static 'images/backg2.png' %});
-
-            background-size:100% 100%;background-repeat: no-repeat;">
-                    <div style="width: 100%;height:30px;">
-                        <p style="width: 40%;float: left">订单号:{{ od.oderid }}</p><p style="width: 40%;float: left">时间:{{ od.time }}</p><p style="width: 10%;float: left">总价:{{ od.totalprice }}</p></div>
-                <form style="width: 100%;height: 30px;" method="post" action="{% url 'ode_up' od.oderid %}"> {% csrf_token %}收货地址：<input name="adres" value="{{ od.useradress }}" style="width: 30%;margin-right: 2%;border-radius: 3px">收货电话：<input name="phone" value="{{ od.phone }}" style="width: 20%;border-radius: 3px"><select style="margin-right: 13%;margin-left: 3%;width: 9%;border-radius: 4px" name="odes"><option value="未发货" {% if od.oders == "未发货" %}selected="selected"{% endif %}>未发货</option><option value="已发货" {% if od.oders == "已发货" %}selected="selected"{% endif %}>已发货</option></select><input type="submit" style="border-radius: 15px" value="提交"></form>
+                 <div style="width: 100%;border-style: solid;margin-bottom: 10px;border-radius: 30px;padding: 20px;background: #d5851220">
+                    <div style="width: 100%;height:40px;">
+                        <p style="width: 33%;float: left">订单号:{{ od.oderid }}</p><p style="width: 33%;float: left">时间:{{ od.time }}</p><p style="width: 34%;float: left">总价:{{ od.price }}</p></div>
+                 <form style="width: 100%;height: 30px;" method="post" action="{% url 'ode_up' od.oderid %}"> {% csrf_token %}收货地址：<input name="adres" value="{{ od.useradress }}" style="width: 30%;margin-right: 2%;border-radius: 3px">收货电话：<input name="phone" value="{{ od.phone }}" style="width: 20%;border-radius: 3px"><select style="margin-right: 13%;margin-left: 3%;width: 9%;border-radius: 4px" name="odes"><option value="未发货" {% if od.oders == "未发货" %}selected="selected"{% endif %}>未发货</option><option value="已发货" {% if od.oders == "已发货" %}selected="selected"{% endif %}>已发货</option></select><input type="submit" style="border-radius: 15px" value="提交"></form>
                     <div style="width: 100%">
+                    {% if od.type == '商品'%}
                         {% for l in od.oderitem %}
                             <div style="width: 100%;
     height: 40px;">
@@ -319,7 +325,10 @@
     overflow: hidden;">商品名:{{ l.gname }}</p><p style="    float: left;
     margin-right: 60px;">数量:{{ l.gnum }}</p><p style="    right: 30%;
     position: absolute;">价格:{{ l.gp }}</p></div>
-                        {% endfor %}</div></div>
+                        {% endfor %}{% endif %}
+                    {% if od.type == '宠物' %}
+                        <img src="/static/images/pet/{{ od.oderitem.ptn }}{{ od.oderitem.ptid }}.png" style="border-radius: 20px;width: 60px;height: 60px;"><div style="float: left;margin-right: 50px"><p style="font-size: 45px">宠物名：{{ od.oderitem.ptn }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;宠物种类：{{ od.oderitem.sp }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;宠物性别：{{ od.oderitem.pts }}</p></div>
+                    {% endif %}</div></div>
             {% endfor %}
         <div class="row page_num_container">
 			<div id="pagination">

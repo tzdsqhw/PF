@@ -3,10 +3,27 @@
 {% block title %} {{ pet.petname }} {% endblock %}
 {%block body%}
 
-<div style="height:100%;width:100%;padding: 10%;background:url({% static 'images/backg.png' %});background-size: 100% 100%">
-<img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt="" STYLE="height: 600px;width: 45%;float: left"><div style="margin-left: 4%;float: left;width: 51%;height:600px"><p style="margin:2%;font-size: 40px">{{ pet.petname }}</p><p style="margin: 2%;font-size: 20px">价格：{{ good.goodprice }}</p><p style="margin: 2%;font-size: 20px">生日：{{ pet.petbirth }}</p><p style="margin: 2%;font-size: 20px">创建：{{ pet.create_time }}</p><div style="width: 100%;padding-left: 20%"><img src="{% static 'images/visited.png' %}" style="height: 10px;width:17px;float: left"><p style="font-size: 7px;float: left;margin-bottom: 2px">{{ pet.vnum }}</p></div></div><div>
-<p>&nbsp;</p>
+<div style="height:100%;width:100%;padding-left: 8%;padding-right:8%;padding-top:4%;padding-bottom:4%;background:url({% static 'images/backg.png' %});background-size: 100% 100%"><div style="min-width:1080px;background-color: #d5851220;margin: 40px;padding: 30px;border-radius: 60px;border: #d58512 solid ;font-family: 造字工房童真体（非商用）">
+<img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt="" STYLE="height: 600px;width: 600px;border-radius: 60px"><div style="float: right;width:400px;height:600px"><p style="margin:2%;font-size: 40px">{{ pet.petname }}</p><p style="margin: 2%;font-size: 20px">价格：{{ pet.petprice }}</p><p style="margin: 2%;font-size: 20px">生日：{{ pet.petbirth }}</p><p style="margin: 2%;font-size: 20px">品种：{{ pet.speci }}</p><p style="margin: 2%;font-size: 20px">性别：{{ pet.petsex }}</p><p style="margin: 2%;font-size: 20px">创建：{{ pet.create_time }}</p>{% if pet.pett == '未出售' %}<form method="post" action="{% url 'singlepet' pet.petid %}">{% csrf_token %}<input style="width: 80%;margin-right: 20%;margin-bottom: 10px" placeholder="输入地址" name="adres"><input style="width: 60%;" placeholder="输入电话" name="phone"><input name="id" value="{{ pet.petid }}" style="display: none">  <input type="submit" style="width: 20%" value="提交"></form>{% endif %}<div style="position: absolute;right: 10%;top:11%"><img src="{% static 'images/visited.png' %}" style="height: 20px;width:35px;float: left"><p style="font-size:14px;float: left;margin-bottom: 2px">{{ pet.vnum }}</p></div></div><div>
+<p>&nbsp;</p><img src="{% static 'images/sold.png' %}" style="position: absolute;width: 68%;height: 68%;top:13%;left: 15%;{% if pet.pett == '未出售' %}display:none{% endif %}"></div>
 </div>
+<div style="width: 80%;background-color: white;border-radius: 20px;margin-right: 10%;margin-left: 10%;padding: 20px">
+<h2 style="margin-bottom: 10px;margin-left: 20px">评论区</h2>
+   {% if ison %}
+       <div style="width: 100%">
+       <form>
+    <textarea type="text"  name="dst" style="resize: none;border-radius: 20px;padding: 10px;width: 90%;height: 150px;margin-bottom: 20px"></textarea>
 
+    <input type="submit" style="float: right" value="发送"></form></div>
+    {% endif %}
+{% if ison == False %}
+    <div style="text-align: center">此功能在登录后可正常使用</div>
+{% endif %}
+{% for comment in comlist %}
+    <div style="width: 100%">
+
+    </div>
+{% endfor %}
+</div>
 </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
+    {% load staticfiles %}
 {% block title %} 首页 {% endblock %}
 {%block body%}
  <div class="banner">
@@ -64,14 +64,14 @@
 <!--banner-strip start here-->
 <div class="bann-strip">
 	<div class="container">
-    <h4 style="font-size: 40px;font-family: 幼圆;background-color: #e5cd6870;margin-bottom: 10px;padding-top: 10px">热 门 宠 物</h4>
+    <h4 style="font-size: 40px;font-family: 幼圆;background-color: #e5cd6870;margin-bottom: 10px;padding-top: 10px;border-radius: 0px 0px 0px 50px">热 门 宠 物</h4>
 		<div class="bann-strip-main">
             {% for pet in petlist %}
 			  <div class="col-md-3 bann-grid" style="  box-shadow:0 15px 15px -15px #000,
-             0 -7px 15px -15px #000;border-radius:10px;padding-bottom: 5px">
-			  	 <a href="single.html"><img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt="{% url 'singlepet' pet.petid %}" class="img-responsive" style="height: 255px;width: 255px "></a>
+             0 -7px 15px -15px #000;border-radius:10px;padding-bottom: 5px;margin-right: 1%;width: 24% ;background: #0d0d0d08">
+			  	 <a href="{% url 'singlepet' pet.petid %}"><img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt="{% url 'singlepet' pet.petid %}" class="img-responsive" style="height: 255px;width: 255px ;margin-top: 20px;border-radius: 20px;margin-bottom: 10px"></a>
 			  	 <div class="details" style="border-radius: 5px">
-			  	 	<a href="{% url 'singlepet' pet.petid %}" style="font-size: 2.2em;
+			  	 	<a href="{% url 'singlepet' pet.petid %}" style="font-size: 3.2em;
     margin: 0.35em 0em;
     font-family:cute;color:#886741;">{{ pet.petname }}</a>
 
@@ -122,8 +122,8 @@
 
                     {% for item in info %}
 			 	 <div class="col-md-4 news-grid" style="font-family:cute">
-			 	 	 <img src="{{item.imgsrc}}"id="newsimg">
-			 	 	 <h5 style="font-family:cute">{{item.title}}</h5><a href="{{item.textsrc}}">Read More</a>
+                     <a href="{% url 'singlenew' item.textsrc %}"> <img src="{{item.imgsrc}}"id="newsimg"></a>
+			 	 	 <h5 style="font-family:cute">{{item.title}}</h5><a href="{% url 'singlenew' item.textsrc %}">Read More</a>
 			 	 	 
 			 	 </div>
                     {%endfor%}

@@ -7,7 +7,9 @@ class Users(models.Model):
     password=models.CharField(max_length=20, verbose_name='密码')
     birth=models.DateField(verbose_name='生日')
     sex=models.CharField(max_length=6,verbose_name='性别',choices=(('男','男'),('女','女')),default='男')
-    head=models.CharField(max_length=20, verbose_name='头像',default='nohead.png')
+    mnum = models.IntegerField(verbose_name='消息数', default=0)
+    head=models.CharField(max_length=40, verbose_name='头像',default='nohead.png')
+    newmessage=models.TextField(verbose_name='新信息',default='{"like":[],"comment":[],"follow":[]}')
     def __str__(self):
         return str(self.userid)
     class Meta:
@@ -15,7 +17,8 @@ class Users(models.Model):
         verbose_name_plural = verbose_name
 class Pets(models.Model):
     petid= models.AutoField(primary_key=True)
-
+    petprice=models.FloatField(verbose_name='宠物价格',default=0)
+    pett=models.CharField(max_length=6,verbose_name='状态',choices=(('已出售','已出售'),('未出售','未出售')),default='未出售')
     petname=models.CharField(max_length=20, verbose_name='宠物名')
     petsex=models.CharField(max_length=6,verbose_name='性别',choices=(('公','公'),('母','母')),default='公')
     petbirth=models.DateField(verbose_name='宠物生日')
@@ -70,8 +73,6 @@ class Likes(models.Model):
     dmentid = models.ForeignKey(Developments,verbose_name='动态',on_delete=models.CASCADE)
     userid = models.ForeignKey(Users,verbose_name='用户',on_delete=models.CASCADE)
     time = models.DateTimeField(verbose_name='时间',auto_now_add=True)
-
-
     def __str__(self):
         return str(self.dmentid)
 
@@ -86,6 +87,7 @@ class Orders(models.Model):
     useradress=models.CharField(verbose_name='收货地址',max_length=35)
     phone = models.CharField(verbose_name='收货电话',max_length=11)
     totalprice=models.FloatField(verbose_name='总价',default=0)
+    type=models.CharField(max_length=6, verbose_name='种类', choices=(('商品', '商品'), ('宠物', '宠物')), default='商品')
     oders = models.CharField(max_length=6, verbose_name='状态', choices=(('未发货', '未发货'), ('已发货', '已发货')), default='未发货')
     def __str__(self):
         return self.oderid
@@ -93,4 +95,27 @@ class Orders(models.Model):
     class Meta:
         verbose_name = '订单'
         verbose_name_plural = verbose_name
+class Follow(models.Model):
+    usertof = models.ForeignKey(Users,verbose_name='关注用户',on_delete=models.CASCADE)
+    usergetfid=models.CharField(max_length=20, verbose_name='被关注用户id')
 
+
+    def __str__(self):
+        return str(self.usertof)
+
+    class Meta:
+        verbose_name = '关注'
+        verbose_name_plural = verbose_name
+class Comment(models.Model):
+    cid= models.AutoField(primary_key=True)
+    user=models.ForeignKey(Users,verbose_name='用户',on_delete=models.CASCADE)
+    dment=models.ForeignKey(Developments,verbose_name='动态',on_delete=models.CASCADE)
+    ctext = models.TextField(verbose_name='评论详情')
+    create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
+
+    def __str__(self):
+        return str(self.cid)
+
+    class Meta:
+        verbose_name = '评论'
+        verbose_name_plural = verbose_name

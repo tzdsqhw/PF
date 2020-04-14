@@ -3,10 +3,10 @@
 {% block title %} {{ good.goodsname }} {% endblock %}
 {%block body%}
 
-<div style="width:100%;padding: 10%;background:url({% static 'images/backg.png' %});background-size: 100% 100%">
-<img src="/static/images/goods/good{{ good.goodsid }}.png" alt="" STYLE="height: 600px;width: 45%;float: left"><div style="margin-left: 4%;float: left;width: 51%;height:600px"><p style="margin:2%;font-size: 40px">{{ good.goodname }}</p><p style="margin: 2%;font-size: 20px">价格：{{ good.goodprice }}</p><p style="margin: 2%;font-size: 20px">库存：{{ good.goodnum }}</p>{% if ison %}<form style="height: 30px" action="{% url 'singlegood' good.goodsid %}" method="post">{% csrf_token %}<input name="gnum" type="number" min="0" style="height: 30px;font-size: 25px;padding: 0;float: left;margin-right: 20px"><input type="submit" style="background: url({% static 'images/shopcar.png' %});height: 30px;width: 30px;background-size: 25px 25px;font-size: 25px" value=" "></form>{% endif %}</div><div>
-    <p>{{ good.goodtext }}</p>
-</div>
+<div style="width:100%;padding: 10%;background:url({% static 'images/backg.png' %});background-size: 100% 100%"><div style="min-width:1280px;background-color: #d5851220;margin: 40px;padding: 30px;border-radius: 60px;border: #d58512 solid ;font-family: 造字工房童真体（非商用）">
+<img src="/static/images/goods/good{{ good.goodsid }}.png" alt="" STYLE="height: 600px;width: 600px;border-radius: 60px"><div style="float: right;width:500px;height:600px"><p style="margin:2%;font-size: 40px">{{ good.goodname }}</p><p style="margin: 2%;font-size: 20px">价格：{{ good.goodprice }}</p><p style="margin: 2%;font-size: 20px">库存：{{ good.goodnum }}</p>{% if ison %}<form style="height: 30px" action="{% url 'singlegood' good.goodsid %}" method="post">{% csrf_token %}<input name="gnum" type="number" min="0" style="height: 30px;width:20%;font-size: 25px;padding: 0;float: left;margin-right: 20px;margin-left: 15px"><input type="submit" style="background: url({% static 'images/shopcar.png' %});height: 30px;width: 30px;background-size: 25px 25px;font-size: 25px" value=" "></form>{% endif %} <p style="padding: 15px">{% for t in txtlist %}{{ t }}<br/>{% endfor %}</p></div><div>
+
+</div></div>
 
 </div>
 {% endblock %}

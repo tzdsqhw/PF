@@ -5,7 +5,7 @@
 <!--header end here-->
 <!--about start here-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/categories.css' %}">
-<div class="products" style="min-height: 500.82px">
+<div class="products" style="min-height: 500.82px;background-color: #d5851220">
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
@@ -74,17 +74,14 @@
 
 {% for pet in page_list.object_list %}
 					<div class="product" style="position: relative;width: 33.33%;float: left">
-						<div class="product_image"><img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt=""></div>
+						<div class="product_image"><a  href="{% url 'singlepet' pet.petid %}"><img src="/static/images/pet/{{ pet.petname }}{{ pet.petid }}.png" alt="{% url 'singlepet' pet.petid %}" style="height: 370px;border-radius: 20px 0px;box-shadow:0 15px 15px -15px #000"></a></div>
 
 						<div class="product_content clearfix">
 							<div class="product_info">
-								<div class="product_name"><a href="{% url 'singlepet' pet.petid %}">{{ pet.petname }}</a></div>
-								<div class="product_price">$45.00</div>
+								<div class="product_name"><a href="{% url 'singlepet' pet.petid %}" style="font-size:32px;font-family: 造字工房米萌体（非商用）">{{ pet.petname }}</a></div>
+								<div class="product_price">${{ pet.petprice }}</div>
 							</div>
-							<div class="product_options">
-								<div class="product_buy product_option"><img src="{% static 'images/home_icon.png' %}" alt=""></div>
 
-							</div>
 						</div>
 					</div>
 {% endfor %}

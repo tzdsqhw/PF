@@ -27,6 +27,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         font-family: cute;src: url("{% static 'fonts/MFMiMeng_Noncommercial-Regular.ttf' %}");
     }
 </style>
+<style>
+    .message{
+        font-size: 8.8px;width:15px;height:15px;position: absolute;top: 50.85px;margin-left: 30.5px;color: white;border-radius: 50%;border: solid 0.3px red;text-align: center;background-color: red
+    }
+    .message:hover{
+        transition: 0.5s;
+        background-color: #00000000;
+        color: red;
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        top: 48.5px;margin-left: 27.5px;
+        border: solid 3px red;
+    }
+</style>
 </head>
 <body>
 <!--header start here-->
@@ -44,13 +59,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li><a href="{% url 'pets' 'all'%}">宠物</a></li>
                         <li><a href="{% url 'shop' 'all'%}">商城</a></li>
                         <li><a href="{% url 'demp' %}">用户广场</a></li>
-                        <li><a>服务</a></li>
-						<li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'serv' %}">服务</a></li>
+						<li><a href="{% url 'about' %}">关于</a></li>
 
                         {% if ison == False  %}
 						<li><a href="{% url 'login' %}">登录</a>|<a href="{% url 'register' %}">注册</a></li>
                         {% endif %}
                         {% if ison == True  %}
+                            <li><a href="{% url 'message' %}">{% if user.mnum > 0%}<img style="width: 50px;height: 34px" src="{% static 'images/message_m.png' %}"/><p class="message" >{{ user.mnum }}</p>{% endif %}
+                                {% if user.mnum == 0 %}<img style="width: 50px;height: 34px" src="{% static 'images/message_n.png' %}"/>{% endif %}消息</a></li>
 						<li><a href="{% url 'person' 'dem'%}">个人中心</a>|<a href="{% url 'logout' %}">退出登录</a></li>
                         {% endif %}
 				   </ul>
@@ -75,16 +92,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="container">
 		<div class="footer-main">
 		    <div class="col-md-3 ftr-grid">
-		    	<h3>About</h3>
-		    	<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</p>
+		    	<h3>关于</h3>
+		    	<p>巴拉巴拉</p>
 		    </div>
 		    <div class="col-md-3 ftr-grid">
-		    	<h3>Wild life</h3>
+		    	<h3>相关链接</h3>
 		    	<ul>
-		    		<li><a href="#">Qui blanditiis praesentium</a></li>
-		    		<li><a href="#">Accusam dignissimos ducimu</a></li>
-		    		<li><a href="#">deleniti atque  molestias.</a></li>
-		    		<li><a href="#">voluptatum deleniti atque.</a></li>
+		    		<li><a href="#">aaaaaaaaaaa</a></li>
+		    		<li><a href="#">bbbbbbbbbbbbb</a></li>
+		    		<li><a href="#">ccccccccccccc</a></li>
+		    		<li><a href="#">dddddddddddddd</a></li>
 		    	</ul>
 		    </div>
 		    <div class="col-md-3 ftr-grid">
@@ -93,12 +110,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		    	<input type="submit" value="搜索">
 		    </div>
 		    <div class="col-md-3 ftr-grid">
-		    	<h3>Follow Us</h3>
+		    	<h3>关注我们</h3>
 		    	<ul>
-		    		<li><a href="#">Facebook</a></li>
-		    		<li><a href="#">Twitter</a></li>
-		    		<li><a href="#">Google +</a></li>
-		    		<li><a href="#">Skype</a></li>
+		    		<li><a href="#">微博</a></li>
+		    		<li><a href="#">qq</a></li>
+
 		    	</ul>
 		    </div>
 			<div class="clearfix"> </div>

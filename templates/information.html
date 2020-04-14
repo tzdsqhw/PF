@@ -7,7 +7,7 @@
      <!--时间js start-->
 		<script src="{% static 'js/moment-with-locales.js' %}"></script>
 		<script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
-    <form style="margin-top: 10%;margin-bottom: 10%;margin-right: 25%;margin-left: 25%;" method="post" name="formcar" action="{% url 'infor' %}" enctype="multipart/form-data">
+    <form style="margin-top: 5%;margin-bottom: 5%;margin-right: 15%;margin-left: 15%;background-color: #d2992b30;padding: 5% 10%;border-radius: 70px" method="post" name="formcar" action="{% url 'infor' %}" enctype="multipart/form-data">
     {% csrf_token %}<img style="background: #808080;width: 200px;height: 200px;margin-left: 20%;margin-right: 20%;margin-bottom: 3%" src="/static/images/userhead/{{ user.head }}">
     <div style="width: 100%"><label style="width: 15%;text-align: center">头&nbsp;&nbsp;&nbsp;&nbsp;像：</label>
     <input type="file" name="head" ><p style="color: red;">如无需修改不用填写</p></div>
