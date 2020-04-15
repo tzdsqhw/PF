@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 消息中心 {% endblock %}
+{%block body%}
+<!--header end here-->
+<!--about start here-->
+    <style>
+    .bigimg{
+width: 50%;height:200px;border: solid 10px #ff2474;border-radius: 50%;padding: 5px
+
+    }
+    .bigimg:hover{transition: 0.8s;
+    transform:rotate(-40deg);
+
+    }
+    .rednum{
+         font-size: 37px;width:65px;height:65px;position: absolute;margin-top: 11px;margin-left: 20.5%;color: white;border-radius: 50%;border: solid 3px white;text-align: center;background-color: red
+
+    }
+    .rednum:hover{
+        transition: 0.5s;
+        transform: scale3d(1.2,1.2,1.2) ;
+
+
+
+    }
+
+    </style>
+<div>
+
+<div style="width: 100%;padding: 150px;min-height: 800px;color: #ff2474;font-family: 造字工房童真体（非商用）">
+<div style="width: 30%;margin-right: 5%;float: left;background: #e5cd6820;border-radius: 30px;padding: 30px;border:#ff2474 solid 10px ;transition: 0.5s;transform: none;" id="likebox">
+<a id="likeli" href="javascript:void(0);"><img class="bigimg"  src="{% static 'images/good_best_782px_1156985_easyicon.net.png' %}">
+    <p style="width: 50%;font-style: unset;font-family: 造字工房童真体（非商用）;font-weight: bolder;font-size: 50px;float: right;text-align: center;margin: 30px 0">点赞</p>{% if lenl > 0 %}<p class="rednum">{{ lenl }}</p>{% endif %}
+</a></div>
+    <div id="combox" style="width: 30%;margin-right: 5%;float:left;background: #e5cd6820;border-radius: 30px;padding: 30px;border:#ff2474 solid 10px ;transition: 0.5s;transform: none">
+<a id="comli" href="javascript:void(0);"><img class="bigimg"  src="{% static 'images/message_801px_1156982_easyicon.net.png' %}">
+        <p style="width: 50%;font-style: unset;font-family: 造字工房童真体（非商用）;font-weight: bolder;font-size: 50px;float: right;text-align: center;margin: 30px 0">评论</p>{% if lenc > 0 %}<p class="rednum">{{ lenc }}</p>{% endif %}
+    </a></div>
+    <div id="folbox" style="width: 30%;float: left;background: #e5cd6820;border-radius: 30px;padding: 30px;border:#ff2474 solid 10px ;transition: 0.5s;transform: none">
+<a id="folli" href="javascript:void(0);"><img class="bigimg" src="{% static 'images/follow.png' %}">
+    <p style="width: 50%;font-style: unset;;font-weight: bolder;font-size: 50px;float: right;text-align: center;margin: 30px 0">粉丝</p>{% if lenf > 0 %}<p class="rednum">{{ lenf }}</p>{% endif %}
+</a></div>
+    <div style="width: 100%;"><div style="float: left;margin-right: 5%;margin-top: -280px; width: 30%;background: #e5cd6820;border-radius: 30px;padding: 30px;border:#ff2474 solid 10px ;transition: 0.5s;transform: rotateX(-90deg);transform-origin: 100% 0 0" id="likeboxx">
+        {% if lenl > 0 %}
+         {% for l in list_like %}
+           <div style="border-bottom:solid 2px black"> <p>{{ l.userid.username }}在{{ l.time }}对你发表的</p><p style="	white-space: nowrap;text-overflow:ellipsis;overflow: hidden;">“{{ l.dmentid.dmenttext }}”表示赞同</p></div>
+    {% endfor %}{% endif %}
+    {% if lenl == 0 %}
+        没有更多的消息
+    {% endif %}
+    </div>
+    <div style="width: 30%;float:left;margin-right: 5%;margin-left:35%;margin-top:-280px;background: #e5cd6820;border-radius: 30px;padding: 30px;border:#ff2474 solid 10px ;transition: 0.5s;transform: rotateX(-90deg);transform-origin: 100% 0 0" id="comboxx">
+           {% if lenc > 0 %}
+        {% for c in list_comment %}
+               <div style="border-bottom:solid 2px black">
+               <p>{{ c.user.username }}在{{ c.create_time }}对你发表的</p><p>“{{ c.dment.dmenttext }}”评论道“{{ c.ctext }}”</p>
+                   </div>
+    {% endfor %}{% endif %}
+    {% if lenc == 0 %}
+        没有更多的消息
+    {% endif %}
+    </div>
+<div style="width: 30%;float:left;background: #e5cd6820;margin-left:70%;margin-top:-280px;border-radius: 30px;padding: 30px;border:#ff2474 solid 10px ;transition: 0.5s;transform: rotateX(-90deg);transform-origin: 100% 0 0" id="folboxx">
+     {% if lenf > 0 %}
+    {% for f in list_follow %}
+         <div style="border-bottom:solid 2px black"> {{ f.username }}开始关注你</div>
+    {% endfor %}
+{% endif %}
+    {% if lenf == 0 %}
+        没有更多的消息
+    {% endif %}</div>
+</div>
+</div>
+<script>
+    $("#likeli").click(function(){
+    element=document.getElementById('likebox');
+        element2=document.getElementById('combox');
+        element3=document.getElementById('folbox');
+        element1=document.getElementById('likeboxx');
+        element22=document.getElementById('comboxx');
+        element33=document.getElementById('folboxx');
+	if (element.style.transform.match("none"))
+	{
+
+		element.style.transform="rotateX(90deg)";
+        element1.style.transform="none";
+		if (element2.style.transform.match("none"))
+        {}else
+        {
+            element2.style.transform="none";
+            element22.style.transform="rotateX(-90deg)";
+        }
+	if (element3.style.transform.match("none"))
+        {}else
+        {
+            element3.style.transform="none";
+            element33.style.transform="rotateX(-90deg)";
+        }
+
+	}
+	else
+	{
+		element.style.transform="none";
+	}
+});
+  $("#comli").click(function(){
+    element=document.getElementById('likebox');
+        element2=document.getElementById('combox');
+        element3=document.getElementById('folbox');
+        element1=document.getElementById('likeboxx');
+        element22=document.getElementById('comboxx');
+        element33=document.getElementById('folboxx');
+	if (element2.style.transform.match("none"))
+	{
+
+		element2.style.transform="rotateX(90deg)";
+		 element22.style.transform="none";
+		if (element.style.transform.match("none"))
+        {}else
+        {
+            element.style.transform="none";
+            element1.style.transform="rotateX(-90deg)";
+        }
+	if (element3.style.transform.match("none"))
+        {}else
+        {
+            element3.style.transform="none";
+            element33.style.transform="rotateX(-90deg)";
+        }
+
+	}
+	else
+	{
+		element2.style.transform="none";
+	}
+});
+    $("#folli").click(function(){
+    element=document.getElementById('likebox');
+        element2=document.getElementById('combox');
+        element3=document.getElementById('folbox');
+        element1=document.getElementById('likeboxx');
+        element22=document.getElementById('comboxx');
+        element33=document.getElementById('folboxx');
+	if (element3.style.transform.match("none"))
+	{
+
+		element3.style.transform="rotateX(90deg)";
+		element33.style.transform="none";
+		if (element2.style.transform.match("none"))
+        {}else
+        {
+            element2.style.transform="none";
+            element22.style.transform="rotateX(-90deg)";
+        }
+	if (element.style.transform.match("none"))
+        {}else
+        {
+            element.style.transform="none";
+            element1.style.transform="rotateX(-90deg)";
+        }
+
+	}
+	else
+	{
+		element3.style.transform="none";
+	}
+});
+</script>
+
+
+
+<!--about end here-->
+<!--footer start here-->
+{%endblock body  %}
